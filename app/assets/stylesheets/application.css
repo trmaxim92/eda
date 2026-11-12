@@ -235,6 +235,39 @@ button, input, select, textarea { font: inherit; }
 }
 .text-link:hover { color: #000; }
 
+.city-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+.city-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.city-chip:hover {
+  border-color: #111;
+  background: var(--yellow-soft);
+}
+.city-steps {
+  margin: 1rem 0 1.5rem;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.45rem;
+}
+.city-type-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.25rem;
+  margin: 1.25rem 0 1.75rem;
+}
+
 .cards-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

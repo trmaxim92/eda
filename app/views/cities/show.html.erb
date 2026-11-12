@@ -1,11 +1,29 @@
 <article class="section">
   <div class="container narrow prose">
-    <h1><%= @city.h1.presence || "Работа курьером в #{@city.name}" %></h1>
+    <p class="eyebrow"><%= @city.region %></p>
+    <h1><%= @city.h1.presence || "Работа курьером в Яндекс Еде в городе #{@city.name}" %></h1>
     <%= simple_format(@city.unique_text) %>
+
+    <h2>Как устроиться в <%= @city.name %></h2>
+    <ol class="city-steps">
+      <li>Выберите формат: пеший, вело или авто.</li>
+      <li>Подготовьте документы (паспорт и данные по требованиям сервиса).</li>
+      <li>Оставьте заявку парку или зарегистрируйтесь самостоятельно.</li>
+      <li>Пройдите подключение в Яндекс Про и выйдите на первый слот.</li>
+    </ol>
+
     <% if @city.delivery_methods.present? %>
       <h2>Способы доставки</h2>
       <%= simple_format(@city.delivery_methods) %>
     <% end %>
+
+    <div class="city-type-links">
+      <a class="text-link" href="<%= rabota_peshim_path %>/">Пеший курьер</a>
+      <a class="text-link" href="<%= rabota_velo_path %>/">Велокурьер</a>
+      <a class="text-link" href="<%= rabota_auto_path %>/">Автокурьер</a>
+      <a class="text-link" href="<%= usloviya_raboty_path %>/">Условия работы</a>
+    </div>
+
     <% if @city.connection_conditions.present? %>
       <h2>Условия подключения</h2>
       <%= simple_format(@city.connection_conditions) %>
@@ -22,18 +40,25 @@
     <div class="form-intro">
       <p class="eyebrow">Заявка</p>
       <h2>Заявка в <%= @city.name %></h2>
+      <p>Укажите контакты — подскажем по подключению в вашем городе.</p>
       <% if @referral_link.present? %>
         <p class="cta-row"><a class="btn btn-secondary" href="<%= register_path_for(city: @city) %>">Зарегистрироваться самостоятельно</a></p>
       <% end %>
     </div>
-    <%= render "shared/lead_form", cities: City.published.available.ordered, courier_types: @courier_types %>
+    <%= render "shared/lead_form",
+          cities: City.published.available.ordered,
+          courier_types: @courier_types,
+          selected_city_id: @city.id %>
   </div>
 </section>
 
 <% if @faqs.any? %>
 <section class="section">
   <div class="container narrow">
-    <h2>FAQ</h2>
+    <div class="section-head">
+      <p class="eyebrow">FAQ</p>
+      <h2>Частые вопросы — <%= @city.name %></h2>
+    </div>
     <%= render "shared/faq", faqs: @faqs %>
   </div>
 </section>

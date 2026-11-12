@@ -123,8 +123,28 @@
   </div>
 </section>
 
-<% if @reviews.any? %>
+<% featured_cities = @cities.select { |c| %w[ufa moskva sankt-peterburg kazan ekaterinburg novosibirsk nizhniy-novgorod krasnodar].include?(c.slug) }.presence || @cities.first(8) %>
+<% if featured_cities.any? %>
 <section class="section">
+  <div class="container">
+    <div class="section-head section-head-row">
+      <div>
+        <p class="eyebrow">Города</p>
+        <h2>Работа курьером в вашем городе</h2>
+      </div>
+      <a class="text-link" href="<%= goroda_path %>/">Все города</a>
+    </div>
+    <div class="city-chip-row">
+      <% featured_cities.each do |city| %>
+        <a class="city-chip" href="<%= gorod_path(city) %>/"><%= city.name %></a>
+      <% end %>
+    </div>
+  </div>
+</section>
+<% end %>
+
+<% if @reviews.any? %>
+<section class="section section-soft">
   <div class="container">
     <div class="section-head section-head-row">
       <div>
