@@ -13,6 +13,10 @@ module Admin
       @cities = @cities.where(is_indexable: false) if params[:filter] == "noindex"
       @cities = @cities.where(seo_title: [ nil, "" ]) if params[:filter] == "no_title"
       @cities = @cities.where(seo_description: [ nil, "" ]) if params[:filter] == "no_description"
+      @cities = @cities.featured if params[:filter] == "featured"
+      if params[:filter] == "no_declension"
+        @cities = @cities.where("coalesce(name_genitive, '') = '' OR coalesce(name_dative, '') = '' OR coalesce(name_in_prepositional, '') = ''")
+      end
       if params[:filter] == "no_content"
         @cities = @cities.select { |c| c.unique_text.to_s.strip.length < 200 }
       end
@@ -78,9 +82,9 @@ module Admin
 
     def city_params
       params.require(:city).permit(
-        :name, :slug, :region, :country, :name_in_prepositional, :short_description,
-        :connection_available, :published, :is_indexable, :unique_text,
-        :delivery_methods, :connection_conditions, :work_features,
+        :name, :slug, :region, :country, :name_in_prepositional, :name_genitive, :name_dative,
+        :short_description, :connection_available, :published, :is_indexable, :is_featured,
+        :sort_order, :unique_text, :delivery_methods, :connection_conditions, :work_features,
         :seo_title, :seo_description, :h1, :canonical_url, :robots_meta, :og_title, :og_description
       )
     end

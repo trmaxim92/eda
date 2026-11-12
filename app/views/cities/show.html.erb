@@ -1,15 +1,23 @@
 <article class="section">
   <div class="container narrow prose">
+    <nav class="breadcrumbs" aria-label="Хлебные крошки">
+      <a href="<%= root_path %>">Главная</a>
+      <span>/</span>
+      <a href="<%= goroda_path %>/">Города</a>
+      <span>/</span>
+      <span><%= @city.name %></span>
+    </nav>
+
     <p class="eyebrow"><%= @city.region %></p>
     <h1><%= @city.h1.presence || "Работа курьером в Яндекс Еде #{@city.name_prepositional}" %></h1>
     <% if @city.short_description.present? %><p class="lead"><%= @city.short_description %></p><% end %>
     <%= simple_format(@city.unique_text) %>
 
-    <h2>Как устроиться <%= @city.name_prepositional %></h2>
+    <h2>Как начать работать <%= @city.name_prepositional %></h2>
     <ol class="city-steps">
       <li>Выберите доступный формат доставки.</li>
       <li>Подготовьте документы по требованиям сервиса.</li>
-      <li>Оставьте заявку парку или зарегистрируйтесь самостоятельно.</li>
+      <li>Оставьте заявку или зарегистрируйтесь самостоятельно.</li>
       <li>Пройдите подключение в Яндекс Про и выйдите на первый слот.</li>
     </ol>
 
@@ -19,7 +27,7 @@
         <% @courier_types.each do |type| %>
           <% regional = @city_courier_pages.find { |p| p.courier_type_id == type.id } %>
           <% if regional %>
-            <a class="text-link" href="<%= gorod_courier_type_path(city_slug: @city.slug, courier_type_slug: regional.slug) %>"><%= type.name %></a>
+            <a class="text-link" href="<%= gorod_courier_type_path(city_slug: @city.slug, courier_type_slug: regional.slug) %>/"><%= type.name %></a>
           <% else %>
             <a class="text-link" href="/<%= type.slug %>/"><%= type.name %></a>
           <% end %>
@@ -28,7 +36,7 @@
     <% end %>
 
     <% if @city.delivery_methods.present? %>
-      <h2>Способы доставки</h2>
+      <h2>Условия и форматы <%= @city.name_prepositional %></h2>
       <%= simple_format(@city.delivery_methods) %>
     <% end %>
     <% if @city.connection_conditions.present? %>
@@ -40,9 +48,16 @@
       <%= simple_format(@city.work_features) %>
     <% end %>
 
+    <% sample_type = @courier_types.first %>
+    <% if sample_type&.requirements.present? || sample_type&.documents.present? %>
+      <h2>Требования и документы</h2>
+      <% if sample_type.requirements.present? %><%= simple_format(sample_type.requirements) %><% end %>
+      <% if sample_type.documents.present? %><%= simple_format(sample_type.documents) %><% end %>
+      <p class="muted">Точный список зависит от формата и гражданства — уточним при заявке.</p>
+    <% end %>
+
     <div class="city-type-links">
-      <a class="text-link" href="<%= usloviya_raboty_path %>/">Условия работы</a>
-      <a class="text-link" href="<%= rabota_cherez_park_path %>/">Работа через парк</a>
+      <a class="text-link" href="<%= usloviya_raboty_path %>/">Общие условия работы</a>
       <a class="text-link" href="<%= goroda_path %>/">Все города</a>
     </div>
   </div>
@@ -53,9 +68,9 @@
     <div class="form-intro">
       <p class="eyebrow">Заявка</p>
       <h2>Заявка <%= @city.name_prepositional %></h2>
-      <p>Укажите контакты — подскажем по подключению в вашем городе.</p>
+      <p>Укажите контакты — подскажем по подключению <%= @city.name_prepositional %>.</p>
       <% if @referral_link.present? %>
-        <p class="cta-row"><a class="btn btn-secondary" href="<%= register_path_for(city: @city) %>">Зарегистрироваться самостоятельно</a></p>
+        <p class="cta-row"><a class="btn btn-primary" href="<%= register_path_for(city: @city) %>">Зарегистрироваться самостоятельно</a></p>
       <% end %>
     </div>
     <%= render "shared/lead_form",

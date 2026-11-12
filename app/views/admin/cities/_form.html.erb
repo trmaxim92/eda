@@ -14,9 +14,12 @@
   <div class="form-grid">
     <label>Название<%= f.text_field :name, required: true %></label>
     <label>Slug<%= f.text_field :slug %></label>
-    <label>В предложном падеже<%= f.text_field :name_in_prepositional, placeholder: "в Уфе" %></label>
+    <label>Предложный (фраза)<%= f.text_field :name_in_prepositional, placeholder: "в Уфе" %></label>
+    <label>Родительный<%= f.text_field :name_genitive, placeholder: "Уфы" %></label>
+    <label>Дательный<%= f.text_field :name_dative, placeholder: "Уфе" %></label>
     <label>Регион<%= f.text_field :region %></label>
     <label>Страна<%= f.text_field :country %></label>
+    <label>Порядок<%= f.number_field :sort_order %></label>
     <label>Краткое описание<%= f.text_field :short_description %></label>
   </div>
 
@@ -49,6 +52,7 @@
 
   <label class="checkbox"><%= f.check_box :connection_available %> Подключение доступно</label>
   <label class="checkbox"><%= f.check_box :is_indexable %> Разрешить индексацию</label>
+  <label class="checkbox"><%= f.check_box :is_featured %> Показывать на главной</label>
   <label class="checkbox"><%= f.check_box :published %> Опубликовано</label>
   <%= f.submit "Сохранить", class: "btn btn-primary" %>
 <% end %>

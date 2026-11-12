@@ -1,18 +1,59 @@
-<section class="section">
+<section class="section" data-controller="city-filter">
   <div class="container">
     <div class="section-head">
       <p class="eyebrow">География</p>
-      <h1><%= seo_meta[:h1] %></h1>
-      <p class="lead">Города, где доступно подключение курьеров к Яндекс Еде.</p>
+      <h1>Города, в которых можно работать курьером</h1>
+      <p class="lead">Активные города с подтверждённым подключением. Выберите свой — откроются условия и форматы доставки.</p>
     </div>
-    <div class="cards-3">
-      <% @cities.each do |city| %>
-        <a class="type-card" href="<%= gorod_path(city) %>/">
-          <h3><%= city.name %></h3>
-          <p><%= city.region %></p>
-          <span class="text-link">Открыть</span>
-        </a>
+
+    <div class="city-catalog-toolbar">
+      <label class="city-select-label">
+        Найти город
+        <input type="search"
+               class="city-combobox-input"
+               placeholder="Начните вводить название"
+               data-action="input->city-filter#filter"
+               data-city-filter-target="input"
+               autocomplete="off">
+      </label>
+      <a class="btn btn-primary" href="#lead-form">Оставить заявку</a>
+    </div>
+
+    <% @cities_by_region.each do |region, cities| %>
+      <div class="city-region-block" data-city-filter-region>
+        <h2 class="city-region-title"><%= region.presence || "Другие города" %></h2>
+        <div class="city-chip-row">
+          <% cities.each do |city| %>
+            <a class="city-chip"
+               href="<%= gorod_path(city) %>/"
+               data-city-filter-item
+               data-name="<%= city.name %>"><%= city.name %></a>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if @cities.blank? %>
+      <p class="muted">Сейчас нет опубликованных городов. Оставьте заявку — подскажем по подключению.</p>
+    <% end %>
+  </div>
+</section>
+
+<section class="section section-soft" id="lead-form">
+  <div class="container form-wrap">
+    <div class="form-intro">
+      <p class="eyebrow">Заявка</p>
+      <h2>Не нашли город?</h2>
+      <p>Оставьте контакты — уточним, доступно ли подключение в вашем городе.</p>
+      <% if registration_available? %>
+        <p class="cta-row">
+          <a class="btn btn-primary" href="<%= go_register_path %>">Зарегистрироваться самостоятельно</a>
+        </p>
       <% end %>
     </div>
+    <%= render "shared/lead_form",
+          cities: City.published.available.ordered,
+          courier_types: CourierType.published.ordered,
+          selected_city_id: selected_city&.id %>
   </div>
 </section>

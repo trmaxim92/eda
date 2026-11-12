@@ -10,6 +10,8 @@
   <%= link_to "Noindex", admin_cities_path(filter: "noindex") %> ·
   <%= link_to "Без Title", admin_cities_path(filter: "no_title") %> ·
   <%= link_to "Без Description", admin_cities_path(filter: "no_description") %> ·
+  <%= link_to "На главной", admin_cities_path(filter: "featured") %> ·
+  <%= link_to "Без склонений", admin_cities_path(filter: "no_declension") %> ·
   <%= link_to "Без контента", admin_cities_path(filter: "no_content") %>
 </p>
 
@@ -18,6 +20,8 @@
     <tr>
       <th>Город</th>
       <th>Slug</th>
+      <th>#</th>
+      <th>Главная</th>
       <th>Доступен</th>
       <th>Публ.</th>
       <th>Index</th>
@@ -30,6 +34,8 @@
       <tr>
         <td><%= city.name %></td>
         <td><%= city.slug %></td>
+        <td><%= city.sort_order %></td>
+        <td><%= city.is_featured? ? "да" : "нет" %></td>
         <td><%= city.connection_available? ? "да" : "нет" %></td>
         <td><%= city.published? ? "да" : "нет" %></td>
         <td><%= city.indexable? ? "да" : "нет" %></td>

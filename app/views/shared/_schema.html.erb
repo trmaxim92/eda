@@ -1,0 +1,55 @@
+<script type="application/ld+json">
+<%= raw({
+  "@context" => "https://schema.org",
+  "@type" => "Organization",
+  "name" => "Яндекс Еда — работа курьером",
+  "url" => root_url,
+  "telephone" => (SiteSetting.get("contact_phone", "") rescue ""),
+  "email" => (SiteSetting.get("contact_email", "") rescue "")
+}.to_json) %>
+</script>
+<script type="application/ld+json">
+<%= raw({
+  "@context" => "https://schema.org",
+  "@type" => "WebSite",
+  "name" => "Работа курьером в Яндекс Еде",
+  "url" => root_url,
+  "inLanguage" => "ru-RU"
+}.to_json) %>
+</script>
+<% if local_assigns[:breadcrumbs].present? %>
+<script type="application/ld+json">
+<%= raw({
+  "@context" => "https://schema.org",
+  "@type" => "BreadcrumbList",
+  "itemListElement" => breadcrumbs.each_with_index.map { |crumb, index|
+    {
+      "@type" => "ListItem",
+      "position" => index + 1,
+      "name" => crumb[:name],
+      "item" => crumb[:url]
+    }
+  }
+}.to_json) %>
+</script>
+<% end %>
+<% if local_assigns[:faqs].present? && faqs.any? %>
+<script type="application/ld+json">
+<%= raw({
+  "@context" => "https://schema.org",
+  "@type" => "FAQPage",
+  "mainEntity" => faqs.map { |faq|
+    question = faq.respond_to?(:question) ? faq.question : faq["question"]
+    answer = faq.respond_to?(:answer) ? faq.answer : faq["answer"]
+    {
+      "@type" => "Question",
+      "name" => question,
+      "acceptedAnswer" => {
+        "@type" => "Answer",
+        "text" => answer
+      }
+    }
+  }
+}.to_json) %>
+</script>
+<% end %>

@@ -11,6 +11,8 @@ module Admin
         @issues << "#{label}: пустой H1" if city.h1.blank?
         @issues << "#{label}: мало уникального контента" if city.unique_text.to_s.strip.length < 200
         @issues << "#{label}: нет доступных типов" if city.published? && city.available_courier_types.none?
+        @issues << "#{label}: не заполнены склонения" unless city.declensions_complete?
+        @issues << "#{label}: нет реферальной ссылки" if city.published? && ReferralResolver.new(city: city).call.blank?
         @issues << "#{label}: published но не indexable" if city.published? && !city.indexable?
       end
 

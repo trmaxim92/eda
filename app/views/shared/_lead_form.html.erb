@@ -6,7 +6,14 @@
   </div>
   <div class="form-grid">
     <label>Имя<%= f.text_field :name, required: true, placeholder: "Как к вам обращаться" %></label>
-    <label>Телефон<%= f.telephone_field :phone, required: true, placeholder: "+7 ..." %></label>
+    <label>Телефон
+      <%= f.telephone_field :phone,
+            required: true,
+            placeholder: "+7 (999) 123-45-67",
+            inputmode: "tel",
+            autocomplete: "tel",
+            data: { controller: "phone-mask", action: "input->phone-mask#format" } %>
+    </label>
     <label>Город
       <%= f.collection_select :city_id, cities, :id, :name, { include_blank: "Выберите город", selected: selected_city_id }, required: true %>
     </label>
@@ -18,5 +25,7 @@
     <%= f.check_box :consent, required: true %>
     Согласен на обработку персональных данных
   </label>
-  <%= f.submit "Отправить заявку", class: "btn btn-primary" %>
+  <%= f.submit "Отправить заявку",
+        class: "btn btn-primary",
+        data: { controller: "analytics", analytics_event_value: "lead_submit_click", action: "click->analytics#track" } %>
 <% end %>

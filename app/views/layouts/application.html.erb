@@ -16,6 +16,21 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= render "shared/schema", faqs: @faqs %>
+    <% metrika_id = SiteSetting.get("yandex_metrika_id", "") rescue "" %>
+    <% ga4_id = SiteSetting.get("ga4_id", "") rescue "" %>
+    <% if metrika_id.present? %>
+      <script>window.YANDEX_METRIKA_ID = <%= raw metrika_id.to_json %>;</script>
+    <% end %>
+    <% if ga4_id.present? %>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=<%= ga4_id %>"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '<%= ga4_id %>', { anonymize_ip: true });
+      </script>
+    <% end %>
   </head>
   <body>
     <header class="site-header">

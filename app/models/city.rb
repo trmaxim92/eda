@@ -14,23 +14,39 @@ class City < ApplicationRecord
 
   validates :name, :slug, presence: true
   validates :slug, uniqueness: true
+  validates :sort_order, numericality: { only_integer: true }
   validate :publishable_content, if: :published?
 
   scope :published, -> { where(published: true) }
   scope :available, -> { where(connection_available: true) }
   scope :indexable, -> { published.available.where(is_indexable: true) }
-  scope :ordered, -> { order(:name) }
+  scope :featured, -> { where(is_featured: true) }
+  scope :ordered, -> { order(:sort_order, :name) }
 
   before_validation :generate_slug, if: -> { slug.blank? && name.present? }
   before_validation :ensure_prepositional
+  before_save :touch_content_updated_at, if: :content_fields_changed?
   after_update :create_slug_redirect, if: :saved_change_to_slug?
 
   def to_param
     slug
   end
 
+  # Full phrase for templates: "в Уфе"
   def name_prepositional
     name_in_prepositional.presence || "в городе #{name}"
+  end
+
+  def name_genitive_form
+    name_genitive.presence || name
+  end
+
+  def name_dative_form
+    name_dative.presence || name
+  end
+
+  def declensions_complete?
+    name_in_prepositional.present? && name_genitive.present? && name_dative.present?
   end
 
   def indexable?
@@ -49,7 +65,7 @@ class City < ApplicationRecord
       seo_title.present?,
       seo_description.present?,
       h1.present?,
-      name_in_prepositional.present?,
+      declensions_complete?,
       available_courier_types.exists?
     ]
     ((checks.count(true).to_f / checks.size) * 100).round
@@ -74,6 +90,19 @@ class City < ApplicationRecord
     return if name_in_prepositional.present? || name.blank?
 
     self.name_in_prepositional = "в городе #{name}"
+  end
+
+  def content_fields_changed?
+    will_save_change_to_unique_text? ||
+      will_save_change_to_short_description? ||
+      will_save_change_to_delivery_methods? ||
+      will_save_change_to_connection_conditions? ||
+      will_save_change_to_work_features? ||
+      will_save_change_to_faq_items?
+  end
+
+  def touch_content_updated_at
+    self.content_updated_at = Time.current
   end
 
   def publishable_content

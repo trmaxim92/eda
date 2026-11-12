@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_12_180001) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_12_190001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -39,9 +39,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_12_180001) do
     t.string "country", default: "RU", null: false
     t.string "short_description"
     t.boolean "is_indexable", default: true, null: false
+    t.boolean "is_featured", default: false, null: false
+    t.integer "sort_order", default: 0, null: false
+    t.string "name_genitive"
+    t.string "name_dative"
+    t.datetime "content_updated_at"
+    t.index ["is_featured"], name: "index_cities_on_is_featured"
     t.index ["is_indexable"], name: "index_cities_on_is_indexable"
     t.index ["published"], name: "index_cities_on_published"
     t.index ["slug"], name: "index_cities_on_slug", unique: true
+    t.index ["sort_order"], name: "index_cities_on_sort_order"
   end
 
   create_table "city_courier_pages", force: :cascade do |t|
