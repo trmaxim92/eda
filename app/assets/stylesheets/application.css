@@ -243,10 +243,16 @@ button, input, select, textarea { font: inherit; }
 
 .city-select-form {
   display: grid;
-  grid-template-columns: 1fr 1fr auto;
+  grid-template-columns: minmax(16rem, 28rem);
   gap: 1rem;
   align-items: end;
   margin-bottom: 1.5rem;
+}
+.city-select-label {
+  display: grid;
+  gap: 0.4rem;
+  font-weight: 700;
+  font-size: 0.9rem;
 }
 .city-selected {
   display: flex;

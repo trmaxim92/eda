@@ -28,7 +28,7 @@
       <div>
         <p class="eyebrow">Город</p>
         <h2>Выберите город</h2>
-        <p class="section-lead">Выбор сохраняется у вас в браузере и не меняет адрес страницы для поиска.</p>
+        <p class="section-lead">Покажем доступные форматы и ссылки для вашего города.</p>
       </div>
       <% if selected_city %>
         <div class="city-selected">
@@ -39,25 +39,15 @@
     </div>
 
     <%= form_with url: select_city_path, method: :post, class: "city-select-form", local: true do %>
-      <label>
-        Найти город
-        <input type="search" name="q" list="city-options" placeholder="Начните вводить название" class="city-search" oninput="this.form.city_slug.value=''">
-      </label>
-      <datalist id="city-options">
-        <% @cities.each do |city| %>
-          <option value="<%= city.name %>" data-slug="<%= city.slug %>"></option>
-        <% end %>
-      </datalist>
-      <label>
-        Или выберите из списка
-        <select name="city_slug" required>
-          <option value="">Выберите город</option>
+      <label class="city-select-label">
+        Ваш город
+        <select name="city_slug" required onchange="this.form.requestSubmit()">
+          <option value="">Выберите из списка</option>
           <% @cities.each do |city| %>
             <option value="<%= city.slug %>" <%= "selected" if selected_city&.id == city.id %>><%= city.name %></option>
           <% end %>
         </select>
       </label>
-      <button type="submit" class="btn btn-primary">Выбрать</button>
     <% end %>
 
     <% if selected_city %>
