@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: park
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: park_dostavka_production
+    volumes:
+      - park_pg_data:/var/lib/postgresql/data
+    command: ["postgres", "-c", "shared_buffers=64MB", "-c", "max_connections=40"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U park -d park_dostavka_production"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    mem_limit: 256m
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      RAILS_ENV: production
+      RAILS_LOG_TO_STDOUT: "1"
+      RAILS_SERVE_STATIC_FILES: "true"
+      DATABASE_URL: postgres://park:${POSTGRES_PASSWORD}@db:5432/park_dostavka_production
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      APP_HOST: ${APP_HOST:-159.194.242.228}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      RAILS_MAX_THREADS: "3"
+      WEB_CONCURRENCY: "0"
+    ports:
+      - "80:3000"
+    volumes:
+      - park_storage:/rails/storage
+    mem_limit: 512m
+
+volumes:
+  park_pg_data:
+  park_storage:

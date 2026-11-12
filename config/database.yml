@@ -78,20 +78,5 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  primary: &primary_production
-    <<: *default
-    database: eda_production
-    username: eda
-    password: <%= ENV["EDA_DATABASE_PASSWORD"] %>
-  cache:
-    <<: *primary_production
-    database: eda_production_cache
-    migrations_paths: db/cache_migrate
-  queue:
-    <<: *primary_production
-    database: eda_production_queue
-    migrations_paths: db/queue_migrate
-  cable:
-    <<: *primary_production
-    database: eda_production_cable
-    migrations_paths: db/cable_migrate
+  <<: *default
+  url: <%= ENV.fetch("DATABASE_URL", "postgres://park:park@localhost:5432/park_dostavka_production") %>
