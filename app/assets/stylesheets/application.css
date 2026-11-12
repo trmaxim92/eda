@@ -650,7 +650,7 @@ input, select, textarea {
   .stats,
   .admin-shell { grid-template-columns: 1fr; }
   .hero-shell { min-height: 0; }
-  .hero-art { order: -1; }
+  .hero-art { order: -1; justify-self: center; width: min(100%, 320px); }
   .section-head-row { align-items: start; flex-direction: column; }
   .calc-panel,
   .final-cta { padding: 1.4rem; }
