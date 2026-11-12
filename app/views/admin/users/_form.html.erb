@@ -1,0 +1,11 @@
+<%= form_with model: [:admin, user], class: "lead-form" do |f| %>
+  <div class="form-grid">
+    <label>Email<%= f.email_field :email %></label>
+    <label>Имя<%= f.text_field :name %></label>
+    <label>Роль<%= f.select :role, User.roles.keys %></label>
+    <label>Пароль<%= f.password_field :password %></label>
+    <label>Подтверждение<%= f.password_field :password_confirmation %></label>
+  </div>
+  <label class="checkbox"><%= f.check_box :active %> Активен</label>
+  <%= f.submit "Сохранить", class: "btn btn-primary" %>
+<% end %>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title><%= page_title %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="<%= meta_description %>">
+    <meta name="robots" content="<%= robots_meta_content %>">
+    <link rel="canonical" href="<%= canonical_url %>">
+    <meta property="og:title" content="<%= seo_meta[:og_title].presence || page_title %>">
+    <meta property="og:description" content="<%= seo_meta[:og_description].presence || meta_description %>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= canonical_url %>">
+    <meta name="twitter:card" content="summary_large_image">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="<%= root_path %>">Park Dostavka</a>
+        <nav class="nav" aria-label="Основная навигация">
+          <a href="<%= rabota_kurerom_path %>/">Курьерам</a>
+          <a href="<%= rabota_peshim_path %>/">Пеший</a>
+          <a href="<%= rabota_velo_path %>/">Вело</a>
+          <a href="<%= rabota_auto_path %>/">Авто</a>
+          <a href="<%= goroda_path %>/">Города</a>
+          <a href="<%= otzyvy_path %>/">Отзывы</a>
+          <a href="<%= kontakty_path %>/">Контакты</a>
+        </nav>
+        <div class="header-actions">
+          <a class="btn btn-secondary" href="#lead-form">Оставить заявку</a>
+          <% if registration_available? %>
+            <a class="btn btn-primary" href="<%= go_register_path %>">Зарегистрироваться</a>
+          <% end %>
+        </div>
+      </div>
+    </header>
+
+    <% if notice.present? %><div class="flash flash-notice container"><%= notice %></div><% end %>
+    <% if alert.present? %><div class="flash flash-alert container"><%= alert %></div><% end %>
+
+    <main>
+      <%= yield %>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <strong>Park Dostavka</strong>
+          <p>Парк-партнёр для подключения курьеров к Яндекс Еде. Не является официальным сайтом Яндекса.</p>
+        </div>
+        <div>
+          <a href="<%= usloviya_raboty_path %>/">Условия работы</a>
+          <a href="<%= rabota_cherez_park_path %>/">Работа через парк</a>
+          <a href="<%= blog_path %>/">Блог</a>
+        </div>
+        <div>
+          <p><%= (SiteSetting.get("contact_phone", "+7 (000) 000-00-00") rescue "+7 (000) 000-00-00") %></p>
+          <p><%= (SiteSetting.get("contact_email", "hello@park-dostavka.ru") rescue "hello@park-dostavka.ru") %></p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

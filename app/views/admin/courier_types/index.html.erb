@@ -1,0 +1,15 @@
+<h1>Типы курьеров <%= link_to "Создать", new_admin_courier_type_path, class: "btn btn-primary" %></h1>
+<table class="admin-table">
+  <thead><tr><th>Название</th><th>Slug</th><th>Code</th><th>Публ.</th><th></th></tr></thead>
+  <tbody>
+    <% @courier_types.each do |type| %>
+      <tr>
+        <td><%= type.name %></td>
+        <td><%= type.slug %></td>
+        <td><%= type.code %></td>
+        <td><%= type.published? ? "да" : "нет" %></td>
+        <td><%= link_to "Изменить", edit_admin_courier_type_path(type) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

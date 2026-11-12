@@ -1,0 +1,18 @@
+<%= form_with model: [:admin, city], class: "lead-form" do |f| %>
+  <% if city.errors.any? %><div class="flash flash-alert"><%= city.errors.full_messages.to_sentence %></div><% end %>
+  <div class="form-grid">
+    <label>Название<%= f.text_field :name %></label>
+    <label>Slug<%= f.text_field :slug %></label>
+    <label>Регион<%= f.text_field :region %></label>
+    <label>SEO Title<%= f.text_field :seo_title %></label>
+    <label>SEO Description<%= f.text_field :seo_description %></label>
+    <label>H1<%= f.text_field :h1 %></label>
+  </div>
+  <label>Уникальный текст<%= f.text_area :unique_text, rows: 8 %></label>
+  <label>Способы доставки<%= f.text_area :delivery_methods, rows: 3 %></label>
+  <label>Условия подключения<%= f.text_area :connection_conditions, rows: 3 %></label>
+  <label>Особенности<%= f.text_area :work_features, rows: 3 %></label>
+  <label class="checkbox"><%= f.check_box :connection_available %> Подключение доступно</label>
+  <label class="checkbox"><%= f.check_box :published %> Опубликовано</label>
+  <%= f.submit "Сохранить", class: "btn btn-primary" %>
+<% end %>

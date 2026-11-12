@@ -1,0 +1,18 @@
+<h1>Страницы <%= link_to "Создать", new_admin_page_path, class: "btn btn-primary" %></h1>
+<table class="admin-table">
+  <thead><tr><th>Title</th><th>Slug</th><th>Тип</th><th>Публ.</th><th></th></tr></thead>
+  <tbody>
+    <% @pages.each do |page| %>
+      <tr>
+        <td><%= page.title %></td>
+        <td><%= page.slug %></td>
+        <td><%= page.page_type %></td>
+        <td><%= page.published? ? "да" : "нет" %></td>
+        <td>
+          <%= link_to "Изменить", edit_admin_page_path(page) %>
+          <%= button_to "Удалить", admin_page_path(page), method: :delete, form: { data: { turbo_confirm: "Удалить?" } } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

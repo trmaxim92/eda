@@ -1,0 +1,11 @@
+<%= form_with model: [:admin, faq], class: "lead-form" do |f| %>
+  <label>Вопрос<%= f.text_field :question %></label>
+  <label>Ответ<%= f.text_area :answer, rows: 5 %></label>
+  <div class="form-grid">
+    <label>Группа<%= f.text_field :group_name %></label>
+    <label>Scope<%= f.text_field :page_scope %></label>
+    <label>Позиция<%= f.number_field :position %></label>
+  </div>
+  <label class="checkbox"><%= f.check_box :published %> Опубликован</label>
+  <%= f.submit "Сохранить", class: "btn btn-primary" %>
+<% end %>

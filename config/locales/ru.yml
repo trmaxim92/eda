@@ -1,0 +1,37 @@
+ru:
+  leads:
+    statuses:
+      new_lead: Новая
+      in_progress: В работе
+      contacted: Связались
+      connected: Подключён
+      rejected: Отказ
+      unreachable: Не удалось связаться
+      archived: Архив
+  activerecord:
+    models:
+      lead: Заявка
+      city: Город
+      page: Страница
+      user: Пользователь
+    attributes:
+      lead:
+        name: Имя
+        phone: Телефон
+        consent: Согласие
+      user:
+        email: Email
+        password: Пароль
+        name: Имя
+        role: Роль
+  devise:
+    sessions:
+      signed_in: Вход выполнен
+      signed_out: Вы вышли из системы
+      already_signed_out: Вы уже вышли
+    failure:
+      unauthenticated: Войдите, чтобы продолжить
+      invalid: Неверный email или пароль
+  errors:
+    messages:
+      blank: не может быть пустым

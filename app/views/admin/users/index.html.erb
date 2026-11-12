@@ -1,0 +1,15 @@
+<h1>Пользователи <%= link_to "Создать", new_admin_user_path, class: "btn btn-primary" %></h1>
+<table class="admin-table">
+  <thead><tr><th>Email</th><th>Имя</th><th>Роль</th><th>Активен</th><th></th></tr></thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.email %></td>
+        <td><%= user.name %></td>
+        <td><%= user.role %></td>
+        <td><%= user.active? ? "да" : "нет" %></td>
+        <td><%= link_to "Изменить", edit_admin_user_path(user) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

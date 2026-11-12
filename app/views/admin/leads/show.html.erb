@@ -1,0 +1,12 @@
+<h1>Заявка #<%= @lead.id %></h1>
+<div class="admin-card">
+  <p><strong>Имя:</strong> <%= @lead.name %></p>
+  <p><strong>Телефон:</strong> <%= @lead.phone %></p>
+  <p><strong>Город:</strong> <%= @lead.city_name || @lead.city&.name %></p>
+  <p><strong>Тип:</strong> <%= @lead.courier_type_name || @lead.courier_type&.name %></p>
+  <p><strong>Статус:</strong> <%= @lead.status_label %></p>
+  <p><strong>Страница:</strong> <%= @lead.landing_page %></p>
+  <p><strong>UTM:</strong> <%= [@lead.utm_source, @lead.utm_medium, @lead.utm_campaign].compact.join(" / ") %></p>
+  <p><strong>Комментарий:</strong> <%= @lead.admin_comment %></p>
+  <p><%= link_to "Изменить", edit_admin_lead_path(@lead), class: "btn btn-primary" %></p>
+</div>

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /go/
+Disallow: /leads
+Disallow: /users/
+
+Sitemap: https://park-dostavka.ru/sitemap.xml

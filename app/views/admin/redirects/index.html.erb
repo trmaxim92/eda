@@ -1,0 +1,15 @@
+<h1>Редиректы <%= link_to "Создать", new_admin_redirect_path, class: "btn btn-primary" %></h1>
+<table class="admin-table">
+  <thead><tr><th>Откуда</th><th>Куда</th><th>Тип</th><th>Активен</th><th></th></tr></thead>
+  <tbody>
+    <% @redirects.each do |redirect| %>
+      <tr>
+        <td><%= redirect.source_path %></td>
+        <td><%= redirect.target_path %></td>
+        <td><%= redirect.redirect_type %></td>
+        <td><%= redirect.active? ? "да" : "нет" %></td>
+        <td><%= link_to "Изменить", edit_admin_redirect_path(redirect) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

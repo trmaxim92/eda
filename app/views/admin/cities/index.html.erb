@@ -1,0 +1,15 @@
+<h1>Города <%= link_to "Создать", new_admin_city_path, class: "btn btn-primary" %></h1>
+<table class="admin-table">
+  <thead><tr><th>Город</th><th>Slug</th><th>Доступен</th><th>Публ.</th><th></th></tr></thead>
+  <tbody>
+    <% @cities.each do |city| %>
+      <tr>
+        <td><%= city.name %></td>
+        <td><%= city.slug %></td>
+        <td><%= city.connection_available? ? "да" : "нет" %></td>
+        <td><%= city.published? ? "да" : "нет" %></td>
+        <td><%= link_to "Изменить", edit_admin_city_path(city) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

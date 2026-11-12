@@ -1,0 +1,27 @@
+<h1>Dashboard</h1>
+<div class="stats">
+  <div class="stat"><span>Заявок всего</span><strong><%= @leads_total %></strong></div>
+  <div class="stat"><span>Новые</span><strong><%= @leads_new %></strong></div>
+  <div class="stat"><span>Заявки сегодня</span><strong><%= @leads_today %></strong></div>
+  <div class="stat"><span>Клики сегодня</span><strong><%= @clicks_today %></strong></div>
+</div>
+<div class="stats">
+  <div class="stat"><span>Клики всего</span><strong><%= @clicks_total %></strong></div>
+  <div class="stat"><span>Клики за неделю</span><strong><%= @clicks_week %></strong></div>
+  <div class="stat"><span>Клики за месяц</span><strong><%= @clicks_month %></strong></div>
+</div>
+
+<h2>Последние заявки</h2>
+<table class="admin-table">
+  <thead><tr><th>Имя</th><th>Телефон</th><th>Статус</th><th>Дата</th></tr></thead>
+  <tbody>
+    <% @recent_leads.each do |lead| %>
+      <tr>
+        <td><%= link_to lead.name, admin_lead_path(lead) %></td>
+        <td><%= lead.phone %></td>
+        <td><%= lead.status_label %></td>
+        <td><%= l(lead.created_at, format: :short) rescue lead.created_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

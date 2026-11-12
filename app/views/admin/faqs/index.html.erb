@@ -1,0 +1,14 @@
+<h1>FAQ <%= link_to "Добавить", new_admin_faq_path, class: "btn btn-primary" %></h1>
+<table class="admin-table">
+  <thead><tr><th>Вопрос</th><th>Scope</th><th>Публ.</th><th></th></tr></thead>
+  <tbody>
+    <% @faqs.each do |faq| %>
+      <tr>
+        <td><%= faq.question %></td>
+        <td><%= faq.page_scope %></td>
+        <td><%= faq.published? ? "да" : "нет" %></td>
+        <td><%= link_to "Изменить", edit_admin_faq_path(faq) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

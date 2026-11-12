@@ -1,0 +1,37 @@
+<article class="section">
+  <div class="container narrow prose">
+    <h1><%= @city.h1.presence || "Работа курьером в #{@city.name}" %></h1>
+    <%= simple_format(@city.unique_text) %>
+    <% if @city.delivery_methods.present? %>
+      <h2>Способы доставки</h2>
+      <%= simple_format(@city.delivery_methods) %>
+    <% end %>
+    <% if @city.connection_conditions.present? %>
+      <h2>Условия подключения</h2>
+      <%= simple_format(@city.connection_conditions) %>
+    <% end %>
+    <% if @city.work_features.present? %>
+      <h2>Особенности работы</h2>
+      <%= simple_format(@city.work_features) %>
+    <% end %>
+  </div>
+</article>
+
+<section class="section section-alt" id="lead-form">
+  <div class="container narrow">
+    <h2>Заявка в <%= @city.name %></h2>
+    <%= render "shared/lead_form", cities: City.published.available.ordered, courier_types: @courier_types %>
+    <% if @referral_link.present? %>
+      <p class="cta-row"><a class="btn btn-secondary" href="<%= register_path_for(city: @city) %>">Зарегистрироваться самостоятельно</a></p>
+    <% end %>
+  </div>
+</section>
+
+<% if @faqs.any? %>
+<section class="section">
+  <div class="container narrow">
+    <h2>FAQ</h2>
+    <%= render "shared/faq", faqs: @faqs %>
+  </div>
+</section>
+<% end %>

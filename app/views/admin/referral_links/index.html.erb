@@ -1,0 +1,21 @@
+<h1>Реферальные ссылки <%= link_to "Создать", new_admin_referral_link_path, class: "btn btn-primary" %></h1>
+<table class="admin-table">
+  <thead><tr><th>Название</th><th>URL</th><th>Город</th><th>Тип</th><th>Активна</th><th>Default</th><th>Клики</th><th></th></tr></thead>
+  <tbody>
+    <% @referral_links.each do |link| %>
+      <tr>
+        <td><%= link.name %></td>
+        <td><%= truncate(link.url, length: 40) %></td>
+        <td><%= link.city&.name || "—" %></td>
+        <td><%= link.courier_type&.name || "—" %></td>
+        <td><%= link.is_active? ? "да" : "нет" %></td>
+        <td><%= link.is_default? ? "да" : "нет" %></td>
+        <td><%= link.referral_clicks.count %></td>
+        <td>
+          <%= link_to "Статистика", admin_referral_link_path(link) %>
+          <%= link_to "Изменить", edit_admin_referral_link_path(link) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

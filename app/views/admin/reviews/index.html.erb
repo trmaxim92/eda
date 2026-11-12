@@ -1,0 +1,15 @@
+<h1>Отзывы <%= link_to "Добавить", new_admin_review_path, class: "btn btn-primary" %></h1>
+<table class="admin-table">
+  <thead><tr><th>Автор</th><th>Текст</th><th>Мод.</th><th>Публ.</th><th></th></tr></thead>
+  <tbody>
+    <% @reviews.each do |review| %>
+      <tr>
+        <td><%= review.author_name %></td>
+        <td><%= truncate(review.body, length: 80) %></td>
+        <td><%= review.moderated? ? "да" : "нет" %></td>
+        <td><%= review.published? ? "да" : "нет" %></td>
+        <td><%= link_to "Изменить", edit_admin_review_path(review) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

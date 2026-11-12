@@ -1,0 +1,13 @@
+<h1>Настройки сайта</h1>
+<table class="admin-table">
+  <thead><tr><th>Ключ</th><th>Значение</th><th></th></tr></thead>
+  <tbody>
+    <% @site_settings.each do |setting| %>
+      <tr>
+        <td><%= setting.key %></td>
+        <td><%= truncate(setting.value.to_s, length: 80) %></td>
+        <td><%= link_to "Изменить", edit_admin_site_setting_path(setting) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

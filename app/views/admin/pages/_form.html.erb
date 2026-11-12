@@ -1,0 +1,19 @@
+<%= form_with model: [:admin, page], class: "lead-form" do |f| %>
+  <% if page.errors.any? %><div class="flash flash-alert"><%= page.errors.full_messages.to_sentence %></div><% end %>
+  <div class="form-grid">
+    <label>Title<%= f.text_field :title %></label>
+    <label>Slug<%= f.text_field :slug %></label>
+    <label>Тип<%= f.select :page_type, Page::PAGE_TYPES %></label>
+    <label>Позиция<%= f.number_field :position %></label>
+    <label>SEO Title<%= f.text_field :seo_title %></label>
+    <label>SEO Description<%= f.text_field :seo_description %></label>
+    <label>H1<%= f.text_field :h1 %></label>
+    <label>Canonical<%= f.text_field :canonical_url %></label>
+    <label>Robots<%= f.text_field :robots_meta %></label>
+    <label>OG Title<%= f.text_field :og_title %></label>
+  </div>
+  <label>Summary<%= f.text_area :summary, rows: 3 %></label>
+  <label>Body (безопасный HTML)<%= f.text_area :body, rows: 10 %></label>
+  <label class="checkbox"><%= f.check_box :published %> Опубликовано</label>
+  <%= f.submit "Сохранить", class: "btn btn-primary" %>
+<% end %>

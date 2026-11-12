@@ -1,0 +1,9 @@
+<%= form_with model: [:admin, redirect], class: "lead-form" do |f| %>
+  <div class="form-grid">
+    <label>Исходный URL<%= f.text_field :source_path %></label>
+    <label>Целевой URL<%= f.text_field :target_path %></label>
+    <label>Тип<%= f.select :redirect_type, [301, 302] %></label>
+  </div>
+  <label class="checkbox"><%= f.check_box :active %> Активен</label>
+  <%= f.submit "Сохранить", class: "btn btn-primary" %>
+<% end %>

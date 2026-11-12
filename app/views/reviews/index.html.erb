@@ -1,0 +1,15 @@
+<section class="section">
+  <div class="container">
+    <h1><%= seo_meta[:h1] %></h1>
+    <p class="lead">Реальные отзывы проходят модерацию. Мы не публикуем фиктивные истории.</p>
+    <div class="cards-3">
+      <% @reviews.each do |review| %>
+        <article class="review-card">
+          <strong><%= review.author_name %></strong>
+          <p class="muted"><%= [review.city_name, review.courier_type_name, review.reviewed_on].compact.join(" · ") %></p>
+          <p><%= review.body %></p>
+        </article>
+      <% end %>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>Админка — Park Dostavka</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body class="admin-body">
+    <div class="admin-shell">
+      <aside class="admin-sidebar">
+        <a class="brand" href="<%= admin_root_path %>">Park Admin</a>
+        <nav>
+          <a href="<%= admin_root_path %>">Dashboard</a>
+          <a href="<%= admin_leads_path %>">Заявки</a>
+          <a href="<%= admin_pages_path %>">Страницы</a>
+          <a href="<%= admin_cities_path %>">Города</a>
+          <a href="<%= admin_courier_types_path %>">Типы курьеров</a>
+          <a href="<%= admin_referral_links_path %>">Реферальные ссылки</a>
+          <a href="<%= admin_reviews_path %>">Отзывы</a>
+          <a href="<%= admin_faqs_path %>">FAQ</a>
+          <a href="<%= admin_redirects_path %>">Редиректы</a>
+          <a href="<%= admin_site_settings_path %>">Настройки</a>
+          <% if current_user&.super_admin? %>
+            <a href="<%= admin_users_path %>">Пользователи</a>
+          <% end %>
+          <a href="<%= root_path %>">На сайт</a>
+          <%= button_to "Выйти", destroy_user_session_path, method: :delete, class: "btn btn-secondary" %>
+        </nav>
+      </aside>
+      <section class="admin-content">
+        <% if notice.present? %><div class="flash flash-notice"><%= notice %></div><% end %>
+        <% if alert.present? %><div class="flash flash-alert"><%= alert %></div><% end %>
+        <%= yield %>
+      </section>
+    </div>
+  </body>
+</html>

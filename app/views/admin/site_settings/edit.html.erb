@@ -1,0 +1,6 @@
+<h1>Настройка: <%= @site_setting.key %></h1>
+<%= form_with model: [:admin, @site_setting], class: "lead-form" do |f| %>
+  <label>Значение<%= f.text_area :value, rows: 4 %></label>
+  <label>Тип<%= f.select :value_type, %w[string integer float boolean json] %></label>
+  <%= f.submit "Сохранить", class: "btn btn-primary" %>
+<% end %>

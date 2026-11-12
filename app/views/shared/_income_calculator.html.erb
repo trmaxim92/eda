@@ -1,0 +1,22 @@
+<div class="calculator" data-controller="income-calculator" data-income-calculator-rate-value="<%= hourly_rate %>">
+  <div class="form-grid">
+    <label>Тип курьера
+      <select data-income-calculator-target="type">
+        <option value="pedestrian">Пеший</option>
+        <option value="bike">Вело</option>
+        <option value="auto">Авто</option>
+      </select>
+    </label>
+    <label>Часов в день
+      <input type="number" min="1" max="16" value="8" data-income-calculator-target="hours" data-action="input->income-calculator#recalculate">
+    </label>
+    <label>Дней в неделю
+      <input type="number" min="1" max="7" value="5" data-income-calculator-target="days" data-action="input->income-calculator#recalculate">
+    </label>
+    <label>Ориентир ₽/час
+      <input type="number" min="100" value="<%= hourly_rate %>" data-income-calculator-target="rate" data-action="input->income-calculator#recalculate">
+    </label>
+  </div>
+  <p class="calc-result">Ориентировочно в месяц: <strong data-income-calculator-target="result">0</strong> ₽</p>
+  <p class="disclaimer">Расчёт является ориентировочным. Фактический доход зависит от количества заказов, города, времени работы, условий платформы и других факторов.</p>
+</div>

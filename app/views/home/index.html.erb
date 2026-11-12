@@ -1,0 +1,105 @@
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <p class="eyebrow">park-dostavka.ru · парк-партнёр</p>
+      <h1><%= seo_meta[:h1] %></h1>
+      <p class="lead">Начните доставлять заказы пешком, на велосипеде или автомобиле. Узнайте условия подключения и выберите удобный способ регистрации.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#lead-form">Оставить заявку</a>
+        <% if registration_available? %>
+          <a class="btn btn-secondary" href="<%= go_register_path %>">Зарегистрироваться самостоятельно</a>
+        <% end %>
+      </div>
+      <ul class="hero-benefits">
+        <li>Пеший, вело и авто</li>
+        <li>Помощь при подключении</li>
+        <li>Заявка или самостоятельная регистрация</li>
+      </ul>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="courier-card">Курьер Яндекс Еды</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="types">
+  <div class="container">
+    <h2>Выберите способ доставки</h2>
+    <div class="cards-3">
+      <% @courier_types.each do |type| %>
+        <a class="type-card" href="/<%= type.slug %>/">
+          <h3><%= type.name %></h3>
+          <p><%= truncate(type.description.to_s, length: 140) %></p>
+        </a>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <h2>Как начать работать</h2>
+    <ol class="steps">
+      <li>Выберите способ доставки</li>
+      <li>Укажите город</li>
+      <li>Оставьте заявку или перейдите к самостоятельной регистрации</li>
+      <li>Подготовьте необходимые документы</li>
+      <li>Пройдите этапы подключения</li>
+      <li>Начните выполнять заказы после подтверждения</li>
+    </ol>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Преимущества сотрудничества</h2>
+    <div class="cards-3">
+      <div><h3>Несколько способов доставки</h3><p>Пешком, на велосипеде или автомобиле — под ваш формат.</p></div>
+      <div><h3>Помощь при подключении</h3><p>Подскажем по документам и этапам регистрации через парк.</p></div>
+      <div><h3>Два сценария старта</h3><p>Оставьте заявку или зарегистрируйтесь самостоятельно по реферальной ссылке.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <h2>Ориентировочный доход</h2>
+    <%= render "shared/income_calculator", hourly_rate: @hourly_rate %>
+  </div>
+</section>
+
+<% if @reviews.any? %>
+<section class="section">
+  <div class="container">
+    <h2>Отзывы курьеров</h2>
+    <div class="cards-3">
+      <% @reviews.each do |review| %>
+        <article class="review-card">
+          <strong><%= review.author_name %></strong>
+          <p class="muted"><%= [review.city_name, review.courier_type_name].compact.join(" · ") %></p>
+          <p><%= review.body %></p>
+        </article>
+      <% end %>
+    </div>
+    <p><a href="<%= otzyvy_path %>/">Все отзывы</a></p>
+  </div>
+</section>
+<% end %>
+
+<section class="section section-alt">
+  <div class="container">
+    <h2>Частые вопросы</h2>
+    <%= render "shared/faq", faqs: @faqs %>
+  </div>
+</section>
+
+<section class="section" id="lead-form">
+  <div class="container narrow">
+    <h2>Оставить заявку</h2>
+    <p>Представитель парка свяжется с вами. Самостоятельная регистрация доступна отдельно.</p>
+    <%= render "shared/lead_form", cities: @cities, courier_types: @courier_types %>
+    <% if registration_available? %>
+      <p class="cta-row"><a class="btn btn-secondary" href="<%= go_register_path %>">Зарегистрироваться самостоятельно</a></p>
+    <% end %>
+  </div>
+</section>

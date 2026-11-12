@@ -1,0 +1,20 @@
+<%= form_with model: Lead.new, url: leads_path, class: "lead-form", data: { turbo: false } do |f| %>
+  <div class="hp" aria-hidden="true">
+    <label>Company<input type="text" name="company" tabindex="-1" autocomplete="off"></label>
+  </div>
+  <div class="form-grid">
+    <label>Имя<%= f.text_field :name, required: true, placeholder: "Как к вам обращаться" %></label>
+    <label>Телефон<%= f.telephone_field :phone, required: true, placeholder: "+7 ..." %></label>
+    <label>Город
+      <%= f.collection_select :city_id, cities, :id, :name, { include_blank: "Выберите город" }, required: true %>
+    </label>
+    <label>Тип доставки
+      <%= f.collection_select :courier_type_id, courier_types, :id, :name, { include_blank: "Выберите тип" }, required: true %>
+    </label>
+  </div>
+  <label class="checkbox">
+    <%= f.check_box :consent, required: true %>
+    Согласен на обработку персональных данных
+  </label>
+  <%= f.submit "Отправить заявку", class: "btn btn-primary" %>
+<% end %>

@@ -1,0 +1,12 @@
+<%= form_with model: [:admin, review], class: "lead-form" do |f| %>
+  <div class="form-grid">
+    <label>Автор<%= f.text_field :author_name %></label>
+    <label>Город (текст)<%= f.text_field :city_name %></label>
+    <label>Тип (текст)<%= f.text_field :courier_type_name %></label>
+    <label>Дата<%= f.date_field :reviewed_on %></label>
+  </div>
+  <label>Текст<%= f.text_area :body, rows: 5 %></label>
+  <label class="checkbox"><%= f.check_box :moderated %> Промодерирован</label>
+  <label class="checkbox"><%= f.check_box :published %> Опубликован</label>
+  <%= f.submit "Сохранить", class: "btn btn-primary" %>
+<% end %>

@@ -1,0 +1,26 @@
+<article class="section">
+  <div class="container narrow prose">
+    <h1><%= @page.h1.presence || @page.title %></h1>
+    <% if @page.summary.present? %><p class="lead"><%= @page.summary %></p><% end %>
+    <%= sanitize_content(@page.body) %>
+  </div>
+</article>
+
+<section class="section section-alt" id="lead-form">
+  <div class="container narrow">
+    <h2>Оставить заявку</h2>
+    <%= render "shared/lead_form", cities: @cities, courier_types: @courier_types %>
+    <% if registration_available? %>
+      <p class="cta-row"><a class="btn btn-secondary" href="<%= go_register_path %>">Зарегистрироваться самостоятельно</a></p>
+    <% end %>
+  </div>
+</section>
+
+<% if @faqs.any? %>
+<section class="section">
+  <div class="container narrow">
+    <h2>FAQ</h2>
+    <%= render "shared/faq", faqs: @faqs %>
+  </div>
+</section>
+<% end %>

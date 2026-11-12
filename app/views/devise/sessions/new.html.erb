@@ -1,0 +1,13 @@
+<section class="section">
+  <div class="container narrow">
+    <h1>Вход в админку</h1>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "lead-form" }) do |f| %>
+      <label>Email<%= f.email_field :email, autofocus: true, autocomplete: "email" %></label>
+      <label>Пароль<%= f.password_field :password, autocomplete: "current-password" %></label>
+      <% if devise_mapping.rememberable? %>
+        <label class="checkbox"><%= f.check_box :remember_me %> Запомнить</label>
+      <% end %>
+      <%= f.submit "Войти", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</section>

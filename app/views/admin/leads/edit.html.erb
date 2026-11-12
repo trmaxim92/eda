@@ -1,0 +1,10 @@
+<h1>Редактирование заявки</h1>
+<%= form_with model: [:admin, @lead], class: "lead-form" do |f| %>
+  <div class="form-grid">
+    <label>Имя<%= f.text_field :name %></label>
+    <label>Телефон<%= f.text_field :phone %></label>
+    <label>Статус<%= f.select :status, lead_status_options %></label>
+  </div>
+  <label>Комментарий<%= f.text_area :admin_comment, rows: 4 %></label>
+  <%= f.submit "Сохранить", class: "btn btn-primary" %>
+<% end %>

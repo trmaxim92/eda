@@ -1,0 +1,10 @@
+<% if faqs.present? %>
+  <div class="faq-list">
+    <% faqs.each do |faq| %>
+      <details class="faq-item">
+        <summary><%= faq.respond_to?(:question) ? faq.question : faq["question"] %></summary>
+        <div><%= simple_format(faq.respond_to?(:answer) ? faq.answer : faq["answer"].to_s) %></div>
+      </details>
+    <% end %>
+  </div>
+<% end %>

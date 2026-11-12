@@ -1,0 +1,20 @@
+<%= form_with model: [:admin, courier_type], class: "lead-form" do |f| %>
+  <div class="form-grid">
+    <label>Название<%= f.text_field :name %></label>
+    <label>Slug<%= f.text_field :slug %></label>
+    <label>Code<%= f.text_field :code %></label>
+    <label>Позиция<%= f.number_field :position %></label>
+    <label>SEO Title<%= f.text_field :seo_title %></label>
+    <label>H1<%= f.text_field :h1 %></label>
+  </div>
+  <label>SEO Description<%= f.text_field :seo_description %></label>
+  <label>Описание<%= f.text_area :description, rows: 4 %></label>
+  <label>Особенности<%= f.text_area :features, rows: 4 %></label>
+  <label>Требования<%= f.text_area :requirements, rows: 4 %></label>
+  <label>Документы<%= f.text_area :documents, rows: 3 %></label>
+  <label>Как начать<%= f.text_area :how_to_start, rows: 3 %></label>
+  <label>Заработок<%= f.text_area :earnings_info, rows: 3 %></label>
+  <label>Плюсы/ограничения<%= f.text_area :pros_cons, rows: 3 %></label>
+  <label class="checkbox"><%= f.check_box :published %> Опубликовано</label>
+  <%= f.submit "Сохранить", class: "btn btn-primary" %>
+<% end %>

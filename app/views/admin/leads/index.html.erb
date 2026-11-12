@@ -1,0 +1,23 @@
+<h1>Заявки</h1>
+<%= form_with url: admin_leads_path, method: :get, local: true, class: "lead-form" do %>
+  <div class="form-grid">
+    <label>Поиск<%= text_field_tag :q, params[:q] %></label>
+    <label>Статус<%= select_tag :status, options_for_select([["Все", ""]] + lead_status_options, params[:status]) %></label>
+  </div>
+  <%= submit_tag "Фильтровать", class: "btn btn-secondary" %>
+<% end %>
+<table class="admin-table">
+  <thead><tr><th>Имя</th><th>Телефон</th><th>Город</th><th>Тип</th><th>Статус</th><th></th></tr></thead>
+  <tbody>
+    <% @leads.each do |lead| %>
+      <tr>
+        <td><%= lead.name %></td>
+        <td><%= lead.phone %></td>
+        <td><%= lead.city_name || lead.city&.name %></td>
+        <td><%= lead.courier_type_name || lead.courier_type&.name %></td>
+        <td><%= lead.status_label %></td>
+        <td><%= link_to "Открыть", admin_lead_path(lead) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
