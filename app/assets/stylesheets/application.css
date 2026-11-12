@@ -140,7 +140,7 @@ button, input, select, textarea { font: inherit; }
 }
 .hero-shell {
   display: grid;
-  grid-template-columns: 0.92fr 1.08fr;
+  grid-template-columns: 1.05fr 0.85fr;
   gap: 1.5rem;
   align-items: center;
 }
@@ -188,6 +188,8 @@ button, input, select, textarea { font: inherit; }
 }
 .hero-art {
   align-self: center;
+  justify-self: end;
+  width: min(100%, 420px);
   animation: art-in 0.9s ease both;
 }
 .hero-courier {
