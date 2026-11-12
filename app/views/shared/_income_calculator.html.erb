@@ -9,20 +9,32 @@
         </select>
       </label>
       <label>Часов в день
-        <input type="number" min="1" max="16" value="8" data-income-calculator-target="hours" data-action="input->income-calculator#recalculate">
+        <select data-income-calculator-target="hours" data-action="change->income-calculator#recalculate">
+          <% (4..12).each do |h| %>
+            <option value="<%= h %>" <%= "selected" if h == 8 %>><%= h %></option>
+          <% end %>
+        </select>
       </label>
       <label>Дней в неделю
-        <input type="number" min="1" max="7" value="5" data-income-calculator-target="days" data-action="input->income-calculator#recalculate">
+        <select data-income-calculator-target="days" data-action="change->income-calculator#recalculate">
+          <% (1..7).each do |d| %>
+            <option value="<%= d %>" <%= "selected" if d == 5 %>><%= d %></option>
+          <% end %>
+        </select>
       </label>
       <label>Ориентир ₽/час
-        <input type="number" min="100" value="<%= hourly_rate %>" data-income-calculator-target="rate" data-action="input->income-calculator#recalculate">
+        <select data-income-calculator-target="rate" data-action="change->income-calculator#recalculate">
+          <% [250, 300, 350, 400, 450, 500].each do |rate| %>
+            <option value="<%= rate %>" <%= "selected" if rate == hourly_rate.to_i %>>от <%= rate %> ₽</option>
+          <% end %>
+        </select>
       </label>
     </div>
     <p class="disclaimer">Расчёт является ориентировочным. Фактический доход зависит от количества заказов, города, времени работы, условий платформы и других факторов.</p>
   </div>
   <div class="calc-result-card">
-    <div class="label">Ориентировочно в месяц</div>
-    <div class="value">≈ <span data-income-calculator-target="result">0</span> ₽</div>
-    <p class="muted">Не является гарантированным заработком</p>
+    <div class="calc-chart" aria-hidden="true"></div>
+    <div class="label">Ориентировочно</div>
+    <div class="value">≈ <span data-income-calculator-target="result">0</span> ₽ <span class="value-suffix">в месяц</span></div>
   </div>
 </div>

@@ -1,44 +1,58 @@
 <section class="hero">
-  <div class="container hero-grid">
-    <div>
+  <div class="container hero-shell">
+    <div class="hero-copy">
       <span class="pill">Работа курьером в Яндекс Еде</span>
-      <h1><%= seo_meta[:h1] %></h1>
-      <p class="lead">Начните доставлять заказы пешком, на велосипеде или автомобиле. Узнайте условия подключения и выберите удобный способ регистрации.</p>
+      <h1>Работа курьером<br>в Яндекс Еде</h1>
+      <p class="lead">Начните доставлять заказы пешком, на велосипеде или автомобиле.</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="#lead-form">Оставить заявку →</a>
+        <a class="btn btn-primary" href="#lead-form">Оставить заявку <span aria-hidden="true">→</span></a>
         <% if registration_available? %>
           <a class="btn btn-secondary" href="<%= go_register_path %>">Зарегистрироваться самостоятельно</a>
+        <% else %>
+          <a class="btn btn-secondary" href="#lead-form">Зарегистрироваться самостоятельно</a>
         <% end %>
       </div>
       <ul class="hero-usps">
-        <li><span class="usp-icon">⚡</span> Гибкий график</li>
-        <li><span class="usp-icon">₽</span> Стабильные выплаты</li>
-        <li><span class="usp-icon">🎧</span> Поддержка 24/7</li>
+        <li>
+          <span class="usp-icon usp-bolt" aria-hidden="true"></span>
+          Гибкий график
+        </li>
+        <li>
+          <span class="usp-icon usp-rub" aria-hidden="true">₽</span>
+          Стабильные выплаты
+        </li>
+        <li>
+          <span class="usp-icon usp-head" aria-hidden="true"></span>
+          Поддержка 24/7
+        </li>
       </ul>
     </div>
-    <div class="hero-visual" role="img" aria-label="Курьер Яндекс Еды"></div>
+    <div class="hero-art">
+      <img class="hero-city" src="/images/hero-city.jpg" alt="" aria-hidden="true">
+      <img class="hero-courier" src="/images/hero-courier.png" alt="Курьер Яндекс Еды">
+    </div>
   </div>
 </section>
 
 <section class="section" id="types">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head center">
       <h2>Выберите способ доставки</h2>
-      <p>Подберите формат под свой ритм и возможности</p>
     </div>
     <div class="cards-3">
-      <% type_media = {
-        "pedestrian" => "https://images.unsplash.com/photo-1526367790996-3e4c9584ff1f?auto=format&fit=crop&w=900&q=80",
-        "bike" => "https://images.unsplash.com/photo-1571068316344-75bc76f77890?auto=format&fit=crop&w=900&q=80",
-        "auto" => "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=900&q=80"
-      } %>
-      <% @courier_types.each do |type| %>
-        <a class="type-card" href="/<%= type.slug %>/">
-          <div class="type-card-media" style="background-image:url('<%= type_media[type.code] || type_media['pedestrian'] %>')"></div>
+      <% type_cards = [
+        ["pedestrian", "Пеший курьер", "Доставка пешком по городу без автомобиля.", "https://images.unsplash.com/photo-1526367790996-3e4c9584ff1f?auto=format&fit=crop&w=900&q=80", "rabota-peshim-kurerom"],
+        ["bike", "Велокурьер", "Доставка на велосипеде — больше мобильности.", "https://images.unsplash.com/photo-1571068316344-75bc76f77890?auto=format&fit=crop&w=900&q=80", "rabota-velokurerom"],
+        ["auto", "Автокурьер", "Доставка на личном автомобиле.", "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=900&q=80", "rabota-avtokurerom"]
+      ] %>
+      <% type_cards.each do |code, title, text, img, slug| %>
+        <% type = @courier_types.find { |t| t.code == code } %>
+        <a class="type-card" href="/<%= type&.slug || slug %>/">
+          <div class="type-card-media" style="background-image:url('<%= img %>')"></div>
           <div class="type-card-body">
             <div>
-              <h3><%= type.name %></h3>
-              <p><%= truncate(type.description.to_s, length: 90) %></p>
+              <h3><%= type&.name || title %></h3>
+              <p><%= text %></p>
             </div>
             <span class="btn-icon" aria-hidden="true">→</span>
           </div>
@@ -50,75 +64,76 @@
 
 <section class="section section-soft">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head center">
       <h2>Как начать работать?</h2>
-      <p>Простой путь от заявки до первых заказов</p>
     </div>
     <div class="steps-row">
       <div class="step-item">
         <div class="step-num">1</div>
-        <h3>Выберите способ</h3>
-        <p>Пеший, вело или авто</p>
+        <div class="step-ico">🖱️</div>
+        <h3>Выберите способ доставки</h3>
       </div>
       <div class="step-item">
         <div class="step-num">2</div>
+        <div class="step-ico">📍</div>
         <h3>Укажите город</h3>
-        <p>Где планируете работать</p>
       </div>
       <div class="step-item">
         <div class="step-num">3</div>
-        <h3>Оставьте заявку</h3>
-        <p>Или зарегистрируйтесь сами</p>
+        <div class="step-ico">✅</div>
+        <h3>Оставьте заявку или зарегистрируйтесь</h3>
       </div>
       <div class="step-item">
         <div class="step-num">4</div>
+        <div class="step-ico">📄</div>
         <h3>Подготовьте документы</h3>
-        <p>Паспорт и данные для оформления</p>
       </div>
       <div class="step-item">
         <div class="step-num">5</div>
-        <h3>Начните доставлять</h3>
-        <p>После подтверждения подключения</p>
+        <div class="step-ico">🚀</div>
+        <h3>Начните доставлять заказы</h3>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="section section-yellow">
-  <div class="container">
-    <div class="section-head">
-      <h2>Сколько можно зарабатывать?</h2>
-      <p>Ориентировочный расчёт — не гарантия дохода</p>
-    </div>
-    <%= render "shared/income_calculator", hourly_rate: @hourly_rate %>
   </div>
 </section>
 
 <section class="section">
+  <div class="container">
+    <div class="calc-panel">
+      <div class="calc-panel-head">
+        <h2>Сколько можно<br>зарабатывать?</h2>
+        <p>Ориентировочный расчёт — не гарантия дохода</p>
+      </div>
+      <%= render "shared/income_calculator", hourly_rate: @hourly_rate %>
+    </div>
+  </div>
+</section>
+
+<section class="section section-soft">
   <div class="container why-grid">
     <div>
-      <h2>Почему выбирают работу через наш парк?</h2>
-      <ul class="check-list">
+      <h2>Почему выбирают работу<br>через наш парк?</h2>
+      <ul class="check-list two-col">
         <li><span class="check">✓</span> Помощь при подключении</li>
-        <li><span class="check">✓</span> Гибкий график, если это допускают условия</li>
-        <li><span class="check">✓</span> Консультации по вопросам работы</li>
-        <li><span class="check">✓</span> Прозрачные условия сотрудничества</li>
-        <li><span class="check">✓</span> Возможность самостоятельной регистрации</li>
-        <li><span class="check">✓</span> Быстрый старт после подтверждения</li>
+        <li><span class="check">✓</span> Прозрачные условия</li>
+        <li><span class="check">✓</span> Удобный график*</li>
+        <li><span class="check">✓</span> Самостоятельная регистрация</li>
+        <li><span class="check">✓</span> Поддержка 24/7</li>
+        <li><span class="check">✓</span> Быстрый старт</li>
       </ul>
+      <p class="disclaimer">*если это допускают действующие условия платформы</p>
     </div>
     <div class="why-media">
-      <a class="btn btn-primary why-cta" href="#lead-form">Вступить в команду курьеров!</a>
+      <a class="btn btn-primary why-cta" href="#lead-form">Присоединяйтесь к команде курьеров! →</a>
     </div>
   </div>
 </section>
 
 <% if @reviews.any? %>
-<section class="section section-soft">
+<section class="section">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head center">
       <h2>Реальные отзывы курьеров</h2>
-      <p>Публикуем только модерированные отзывы</p>
     </div>
     <div class="cards-3">
       <% @reviews.each do |review| %>
@@ -127,7 +142,7 @@
             <div class="avatar"><%= review.author_name.to_s.first %></div>
             <div>
               <strong><%= review.author_name %></strong>
-              <div class="muted"><%= [review.city_name, review.courier_type_name].compact.join(" · ") %></div>
+              <div class="muted"><%= review.city_name %></div>
             </div>
           </div>
           <p><%= review.body %></p>
@@ -135,14 +150,16 @@
         </article>
       <% end %>
     </div>
-    <p style="margin-top:1.25rem"><a class="btn btn-secondary btn-sm" href="<%= otzyvy_path %>/">Читать все отзывы</a></p>
+    <div class="center" style="margin-top:1.5rem">
+      <a class="btn btn-primary btn-sm" href="<%= otzyvy_path %>/">Читать все отзывы →</a>
+    </div>
   </div>
 </section>
 <% end %>
 
 <section class="section">
   <div class="container">
-    <div class="final-cta" id="final-cta">
+    <div class="final-cta">
       <div class="final-cta-inner">
         <h2>Готовы начать?</h2>
         <p>Оставьте заявку или зарегистрируйтесь самостоятельно — и начните доставлять заказы после подключения.</p>
@@ -159,9 +176,9 @@
 
 <section class="section section-soft" id="lead-form">
   <div class="container narrow">
-    <div class="section-head">
+    <div class="section-head center">
       <h2>Оставить заявку</h2>
-      <p>Представитель парка свяжется с вами. Самостоятельная регистрация доступна отдельно.</p>
+      <p>Представитель парка свяжется с вами</p>
     </div>
     <%= render "shared/lead_form", cities: @cities, courier_types: @courier_types %>
   </div>
@@ -169,7 +186,7 @@
 
 <section class="section">
   <div class="container narrow">
-    <div class="section-head">
+    <div class="section-head center">
       <h2>Частые вопросы</h2>
     </div>
     <%= render "shared/faq", faqs: @faqs %>

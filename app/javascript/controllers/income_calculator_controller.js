@@ -13,6 +13,6 @@ export default class extends Controller {
     const days = Number(this.daysTarget.value || 0)
     const rate = Number(this.rateTarget.value || this.rateValue || 0)
     const monthly = Math.round(rate * hours * days * 4.33)
-    this.resultTarget.textContent = monthly.toLocaleString("ru-RU")
+    this.resultTarget.textContent = monthly.toLocaleString("ru-RU").replace(/\u00A0/g, " ")
   }
 }
