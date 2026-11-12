@@ -20,21 +20,22 @@
   <body>
     <header class="site-header">
       <div class="container header-inner">
-        <a class="brand" href="<%= root_path %>">Park Dostavka</a>
+        <a class="brand" href="<%= root_path %>">
+          <span class="brand-mark">П</span>
+          Парк Доставка
+        </a>
         <nav class="nav" aria-label="Основная навигация">
-          <a href="<%= rabota_kurerom_path %>/">Курьерам</a>
-          <a href="<%= rabota_peshim_path %>/">Пеший</a>
-          <a href="<%= rabota_velo_path %>/">Вело</a>
-          <a href="<%= rabota_auto_path %>/">Авто</a>
-          <a href="<%= goroda_path %>/">Города</a>
+          <a href="<%= rabota_v_yandex_eda_path %>/">Работа в Яндекс Еде</a>
+          <a href="<%= usloviya_raboty_path %>/">Условия</a>
           <a href="<%= otzyvy_path %>/">Отзывы</a>
-          <a href="<%= kontakty_path %>/">Контакты</a>
+          <a href="<%= blog_path %>/">Блог</a>
+          <a href="<%= goroda_path %>/">Города</a>
         </nav>
         <div class="header-actions">
-          <a class="btn btn-secondary" href="#lead-form">Оставить заявку</a>
-          <% if registration_available? %>
-            <a class="btn btn-primary" href="<%= go_register_path %>">Зарегистрироваться</a>
-          <% end %>
+          <a class="header-phone" href="tel:<%= (SiteSetting.get('contact_phone', '+78001234567') rescue '+78001234567').to_s.gsub(/[^\d+]/, '') %>">
+            <%= SiteSetting.get("contact_phone", "+7 (800) 123-45-67") rescue "+7 (800) 123-45-67" %>
+          </a>
+          <a class="btn btn-primary btn-sm" href="#lead-form">Оставить заявку</a>
         </div>
       </div>
     </header>
@@ -47,19 +48,35 @@
     </main>
 
     <footer class="site-footer">
-      <div class="container footer-grid">
-        <div>
-          <strong>Park Dostavka</strong>
-          <p>Парк-партнёр для подключения курьеров к Яндекс Еде. Не является официальным сайтом Яндекса.</p>
+      <div class="container">
+        <div class="footer-top">
+          <div>
+            <a class="brand" href="<%= root_path %>">
+              <span class="brand-mark">П</span>
+              Парк Доставка
+            </a>
+            <p>Парк-партнёр для подключения курьеров к Яндекс Еде. Не является официальным сайтом Яндекса.</p>
+          </div>
+          <div class="footer-links">
+            <a href="<%= rabota_kurerom_path %>/">Работа курьером</a>
+            <a href="<%= usloviya_raboty_path %>/">Условия работы</a>
+            <a href="<%= rabota_cherez_park_path %>/">Работа через парк</a>
+            <a href="<%= otzyvy_path %>/">Отзывы</a>
+            <a href="<%= goroda_path %>/">Города</a>
+          </div>
+          <div>
+            <p><strong><%= SiteSetting.get("contact_phone", "+7 (800) 123-45-67") rescue "+7 (800) 123-45-67" %></strong></p>
+            <p><%= SiteSetting.get("contact_email", "hello@park-dostavka.ru") rescue "hello@park-dostavka.ru" %></p>
+            <div class="socials" aria-label="Соцсети">
+              <a href="#" aria-label="Telegram">Tg</a>
+              <a href="#" aria-label="VK">VK</a>
+              <a href="#" aria-label="YouTube">YT</a>
+            </div>
+          </div>
         </div>
-        <div>
-          <a href="<%= usloviya_raboty_path %>/">Условия работы</a>
-          <a href="<%= rabota_cherez_park_path %>/">Работа через парк</a>
-          <a href="<%= blog_path %>/">Блог</a>
-        </div>
-        <div>
-          <p><%= (SiteSetting.get("contact_phone", "+7 (000) 000-00-00") rescue "+7 (000) 000-00-00") %></p>
-          <p><%= (SiteSetting.get("contact_email", "hello@park-dostavka.ru") rescue "hello@park-dostavka.ru") %></p>
+        <div class="footer-bottom">
+          <span>© <%= Time.current.year %> Парк Доставка</span>
+          <span>Политика конфиденциальности · Обработка персональных данных</span>
         </div>
       </div>
     </footer>
