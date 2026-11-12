@@ -3,19 +3,17 @@
     <div class="hero-copy">
       <p class="eyebrow">Парк-партнёр · park-dostavka.ru</p>
       <h1>Работа курьером<br>в Яндекс Еде</h1>
-      <p class="lead">Доставляйте заказы Яндекс Еды пешком, на велосипеде или авто. Подключение через наш парк или самостоятельно в Яндекс Про — гибкий график и выплаты по условиям сервиса.</p>
+      <p class="lead">Подключение пеших, вело- и автокурьеров через парк или самостоятельно. Помогаем с заявкой, документами и первым слотом в Яндекс Про.</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="#lead-form">Оставить заявку</a>
         <% if registration_available? %>
           <a class="btn btn-secondary" href="<%= go_register_path %>">Зарегистрироваться самостоятельно</a>
-        <% else %>
-          <a class="btn btn-secondary" href="#lead-form">Зарегистрироваться самостоятельно</a>
         <% end %>
       </div>
       <ul class="hero-usps">
         <li>Гибкий график</li>
-        <li>Стабильные выплаты</li>
-        <li>Поддержка 24/7</li>
+        <li>Выплаты по условиям сервиса</li>
+        <li>Сопровождение парка</li>
       </ul>
     </div>
     <div class="hero-art">
@@ -27,14 +25,15 @@
 <section class="section" id="types">
   <div class="container">
     <div class="section-head">
-      <p class="eyebrow">Форматы работы</p>
+      <p class="eyebrow">Форматы</p>
       <h2>Выберите способ доставки</h2>
+      <p class="section-lead">Один формат — одна страница с условиями. Подскажем, что подойдёт в вашем городе.</p>
     </div>
     <div class="cards-3">
       <% type_cards = [
-        ["pedestrian", "Пеший курьер", "Доставка пешком по городу без автомобиля.", "/images/type-pedestrian.jpg", "rabota-peshim-kurerom"],
-        ["bike", "Велокурьер", "Доставка на велосипеде — больше маршрутов и мобильности.", "/images/type-bike.jpg", "rabota-velokurerom"],
-        ["auto", "Автокурьер", "Доставка на личном автомобиле на дальние заказы.", "/images/type-auto.jpg", "rabota-avtokurerom"]
+        ["pedestrian", "Пеший курьер", "Короткие маршруты без транспорта. Заказы из ресторанов, магазинов и аптек.", "/images/type-pedestrian.jpg", "rabota-peshim-kurerom"],
+        ["bike", "Велокурьер", "Больше точек за смену на своём или арендованном велосипеде.", "/images/type-bike.jpg", "rabota-velokurerom"],
+        ["auto", "Автокурьер", "Дальние и мультизаказы на личном автомобиле.", "/images/type-auto.jpg", "rabota-avtokurerom"]
       ] %>
       <% type_cards.each do |code, title, text, img, slug| %>
         <% type = @courier_types.find { |t| t.code == code } %>
@@ -51,86 +50,76 @@
   </div>
 </section>
 
-<section class="section section-soft">
+<section class="section section-soft" id="how">
   <div class="container">
     <div class="section-head">
       <p class="eyebrow">Процесс</p>
-      <h2>Как начать работать</h2>
+      <h2>Как начать</h2>
+      <p class="section-lead">Четыре шага от заявки до первого слота.</p>
     </div>
-    <ol class="steps-row">
+    <ol class="steps-row steps-row-4">
       <li class="step-item">
         <span class="step-num">01</span>
-        <h3>Выберите способ доставки</h3>
-        <p>Пеший, вело или авто</p>
+        <h3>Формат и город</h3>
+        <p>Пеший, вело или авто — где планируете работать</p>
       </li>
       <li class="step-item">
         <span class="step-num">02</span>
-        <h3>Укажите город</h3>
-        <p>Где планируете работать</p>
+        <h3>Заявка или регистрация</h3>
+        <p>Через парк или самостоятельно в Яндекс Про</p>
       </li>
       <li class="step-item">
         <span class="step-num">03</span>
-        <h3>Оставьте заявку</h3>
-        <p>Или зарегистрируйтесь сами</p>
+        <h3>Документы и экипировка</h3>
+        <p>Паспорт, обучение, термосумка в центре</p>
       </li>
       <li class="step-item">
         <span class="step-num">04</span>
-        <h3>Подготовьте документы</h3>
-        <p>Паспорт и данные для оформления</p>
-      </li>
-      <li class="step-item">
-        <span class="step-num">05</span>
-        <h3>Начните доставлять</h3>
-        <p>После подтверждения подключения</p>
+        <h3>Первый слот</h3>
+        <p>Выход на доставки после подтверждения</p>
       </li>
     </ol>
   </div>
 </section>
 
-<section class="section">
-  <div class="container">
-    <div class="calc-panel">
-      <div class="calc-panel-head">
-        <p class="eyebrow">Калькулятор</p>
-        <h2>Сколько можно зарабатывать</h2>
-        <p>Ориентир по Москве на базе тарифов Яндекс Еды. Не гарантия дохода — сверяйте в Яндекс Про.</p>
-      </div>
-      <%= render "shared/income_calculator", hourly_rate: @hourly_rate %>
-    </div>
-  </div>
-</section>
-
-<section class="section section-soft">
+<section class="section" id="park">
   <div class="container why-grid">
     <div>
-      <p class="eyebrow">Преимущества парка</p>
-      <h2>Почему выбирают работу через наш парк</h2>
+      <p class="eyebrow">Парк</p>
+      <h2>Зачем подключаться через парк</h2>
+      <p class="section-lead">Парк Доставка — партнёр для оформления и старта. Не официальный сайт Яндекса.</p>
       <ul class="check-list">
-        <li>Помощь с заявкой, документами и первым слотом</li>
-        <li>Пеший, вело и авто — подскажем подходящий формат</li>
-        <li>Поясним тарифы Москвы и как читать начисления в Про</li>
-        <li>Можно зарегистрироваться самостоятельно по ссылке</li>
-        <li>Сопровождение до выдачи экипировки</li>
-        <li>Без обещаний «гарантированного» дохода — только ориентиры</li>
+        <li>Помощь с заявкой и документами</li>
+        <li>Подскажем формат под ваш город</li>
+        <li>Сопровождение до первого слота</li>
+        <li>Можно зарегистрироваться самостоятельно</li>
       </ul>
-    </div>
-    <div class="why-media">
-      <div class="why-media-caption">
-        <p>Готовы подключиться?</p>
+      <p class="cta-row">
         <a class="btn btn-primary" href="#lead-form">Оставить заявку</a>
-      </div>
+        <a class="btn btn-secondary" href="<%= usloviya_raboty_path %>/">Условия работы</a>
+      </p>
+    </div>
+    <div class="why-panel">
+      <p class="why-panel-title">Что нужно для старта</p>
+      <ul class="why-panel-list">
+        <li>Возраст от 18 лет</li>
+        <li>Смартфон с Яндекс Про</li>
+        <li>Паспорт и данные по гражданству</li>
+        <li>Для авто — права и автомобиль</li>
+      </ul>
+      <a class="text-link" href="<%= rabota_cherez_park_path %>/">Как работает парк</a>
     </div>
   </div>
 </section>
 
 <% featured_cities = @cities.select { |c| %w[ufa moskva sankt-peterburg kazan ekaterinburg novosibirsk nizhniy-novgorod krasnodar].include?(c.slug) }.presence || @cities.first(8) %>
 <% if featured_cities.any? %>
-<section class="section">
+<section class="section section-soft" id="cities">
   <div class="container">
     <div class="section-head section-head-row">
       <div>
         <p class="eyebrow">Города</p>
-        <h2>Работа курьером в вашем городе</h2>
+        <h2>Где можно подключиться</h2>
       </div>
       <a class="text-link" href="<%= goroda_path %>/">Все города</a>
     </div>
@@ -144,12 +133,12 @@
 <% end %>
 
 <% if @reviews.any? %>
-<section class="section section-soft">
+<section class="section" id="reviews">
   <div class="container">
     <div class="section-head section-head-row">
       <div>
         <p class="eyebrow">Отзывы</p>
-        <h2>Реальные отзывы курьеров</h2>
+        <h2>Что говорят курьеры</h2>
       </div>
       <a class="text-link" href="<%= otzyvy_path %>/">Все отзывы</a>
     </div>
@@ -171,36 +160,24 @@
 </section>
 <% end %>
 
-<section class="section">
-  <div class="container">
-    <div class="final-cta">
-      <div class="final-cta-inner">
-        <p class="eyebrow eyebrow-light">Старт</p>
-        <h2>Готовы начать</h2>
-        <p>Оставьте заявку или зарегистрируйтесь самостоятельно. Представитель парка поможет на этапе подключения.</p>
-        <div class="cta-row">
-          <a class="btn btn-primary" href="#lead-form">Оставить заявку</a>
-          <% if registration_available? %>
-            <a class="btn btn-ghost" href="<%= go_register_path %>">Зарегистрироваться самостоятельно</a>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section section-soft" id="lead-form">
+<section class="section section-lead-band" id="lead-form">
   <div class="container form-wrap">
     <div class="form-intro">
-      <p class="eyebrow">Заявка</p>
+      <p class="eyebrow eyebrow-light">Заявка</p>
       <h2>Оставить заявку</h2>
-      <p>Укажите контакты — свяжемся и подскажем по подключению.</p>
+      <p>Укажите контакты — свяжемся и подскажем по подключению в вашем городе.</p>
+      <% if registration_available? %>
+        <p class="cta-row">
+          <a class="btn btn-ghost" href="<%= go_register_path %>">Зарегистрироваться самостоятельно</a>
+        </p>
+      <% end %>
     </div>
     <%= render "shared/lead_form", cities: @cities, courier_types: @courier_types %>
   </div>
 </section>
 
-<section class="section">
+<% if @faqs.any? %>
+<section class="section" id="faq">
   <div class="container narrow">
     <div class="section-head">
       <p class="eyebrow">FAQ</p>
@@ -209,3 +186,4 @@
     <%= render "shared/faq", faqs: @faqs %>
   </div>
 </section>
+<% end %>

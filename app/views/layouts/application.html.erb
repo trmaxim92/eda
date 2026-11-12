@@ -25,11 +25,11 @@
           <span class="brand-text">Парк Доставка</span>
         </a>
         <nav class="nav" aria-label="Основная навигация">
-          <a href="<%= rabota_v_yandex_eda_path %>/">Работа в Яндекс Еде</a>
+          <a href="<%= root_path %>#types">Форматы</a>
           <a href="<%= usloviya_raboty_path %>/">Условия</a>
-          <a href="<%= otzyvy_path %>/">Отзывы</a>
-          <a href="<%= blog_path %>/">Блог</a>
           <a href="<%= goroda_path %>/">Города</a>
+          <a href="<%= otzyvy_path %>/">Отзывы</a>
+          <a href="<%= kontakty_path %>/">Контакты</a>
         </nav>
         <div class="header-actions">
           <a class="header-phone" href="tel:<%= (SiteSetting.get('contact_phone', '+78001234567') rescue '+78001234567').to_s.gsub(/[^\d+]/, '') %>">
