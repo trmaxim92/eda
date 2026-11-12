@@ -40,6 +40,14 @@
 - Добавлен `test/models/city_declension_test.rb` (Москва, Казань, СПб, НН, Саранск + fallback).
 - Прогон: city + declension + seo template + cities/sitemaps controllers.
 
+## Follow-up после аудитов subagents
+
+- `City.indexable` scope приведён к `#indexable?` (title/h1/unique_text≥200) — убран риск sitemap→404.
+- Добавлены `og:image` / `twitter:image` (default hero).
+- Favicon SVG 120×120 задеплоен.
+
+Замечания аудитов про phone mask / schema / featured / demo reviews / home prefill — уже закрыты в основном проходе.
+
 ## Оставшиеся проблемы / вне скоупа этого прохода
 
 1. Confirmed registrations через API/webhook — нет источника правды, не имитируем.

@@ -19,7 +19,13 @@ class City < ApplicationRecord
 
   scope :published, -> { where(published: true) }
   scope :available, -> { where(connection_available: true) }
-  scope :indexable, -> { published.available.where(is_indexable: true) }
+  # Align with #indexable? so sitemap/listings never expose cities that 404 on show.
+  scope :indexable, lambda {
+    published.available.where(is_indexable: true)
+      .where.not(seo_title: [ nil, "" ])
+      .where.not(h1: [ nil, "" ])
+      .where("length(btrim(coalesce(unique_text, ''))) >= 200")
+  }
   scope :featured, -> { where(is_featured: true) }
   scope :ordered, -> { order(:sort_order, :name) }
 

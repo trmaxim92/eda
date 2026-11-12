@@ -35,8 +35,8 @@ class SitemapsController < ApplicationController
   end
 
   def cities
-    @entries = City.indexable.map do |city|
-      { loc: "#{request.base_url}/goroda/#{city.slug}/", lastmod: city.updated_at }
+    @entries = City.indexable.select(&:indexable?).map do |city|
+      { loc: "#{request.base_url}/goroda/#{city.slug}/", lastmod: city.content_updated_at || city.updated_at }
     end
     render template: "sitemaps/urlset", formats: :xml
   end

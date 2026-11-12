@@ -23,6 +23,12 @@ module ApplicationHelper
     current_referral_link(city: city, courier_type: courier_type).present?
   end
 
+  def og_image_url_for(record = nil)
+    if record.respond_to?(:og_image) && record.og_image.attached?
+      url_for(record.og_image)
+    end
+  end
+
   def sanitize_content(html)
     sanitize(html.to_s, tags: %w[p br strong em ul ol li a h2 h3 h4], attributes: %w[href rel target])
   end

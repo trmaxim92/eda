@@ -13,7 +13,9 @@
     <meta property="og:description" content="<%= seo_meta[:og_description].presence || meta_description %>">
     <meta property="og:type" content="website">
     <meta property="og:url" content="<%= canonical_url %>">
+    <meta property="og:image" content="<%= seo_meta[:og_image].presence || "#{request.base_url}/images/hero-courier-v4.png" %>">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="<%= seo_meta[:og_image].presence || "#{request.base_url}/images/hero-courier-v4.png" %>">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
