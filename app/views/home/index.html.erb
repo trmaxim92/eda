@@ -1,9 +1,9 @@
 <section class="hero">
   <div class="container hero-shell">
     <div class="hero-copy">
-      <p class="eyebrow">Парк-партнёр · park-dostavka.ru</p>
+      <p class="eyebrow">Яндекс Еда</p>
       <h1>Работа курьером<br>в Яндекс Еде</h1>
-      <p class="lead">Подключение пеших, вело- и автокурьеров через парк или самостоятельно. Помогаем с заявкой, документами и первым слотом в Яндекс Про.</p>
+      <p class="lead">Подключение пеших, вело- и автокурьеров. Помогаем с заявкой, документами и первым слотом в Яндекс Про.</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="#lead-form">Оставить заявку</a>
         <% if registration_available? %>
@@ -13,7 +13,7 @@
       <ul class="hero-usps">
         <li>Гибкий график</li>
         <li>Выплаты по условиям сервиса</li>
-        <li>Сопровождение парка</li>
+        <li>Помощь с подключением</li>
       </ul>
     </div>
     <div class="hero-art">
@@ -38,15 +38,45 @@
       <% end %>
     </div>
 
-    <%= form_with url: select_city_path, method: :post, class: "city-select-form", local: true do %>
+    <%= form_with url: select_city_path,
+          method: :post,
+          class: "city-select-form",
+          local: true,
+          data: { controller: "city-combobox", action: "click@window->city-combobox#close" } do %>
       <label class="city-select-label">
         Ваш город
-        <select name="city_slug" required onchange="this.form.requestSubmit()">
-          <option value="">Выберите из списка</option>
-          <% @cities.each do |city| %>
-            <option value="<%= city.slug %>" <%= "selected" if selected_city&.id == city.id %>><%= city.name %></option>
-          <% end %>
-        </select>
+        <div class="city-combobox" data-action="click->city-combobox#open:stop">
+          <input type="hidden"
+                 name="city_slug"
+                 value="<%= selected_city&.slug %>"
+                 data-city-combobox-target="slug">
+          <input type="search"
+                 name="city_name"
+                 value="<%= selected_city&.name %>"
+                 placeholder="Начните вводить название"
+                 autocomplete="off"
+                 class="city-combobox-input"
+                 data-city-combobox-target="input"
+                 data-action="focus->city-combobox#open input->city-combobox#filter keydown->city-combobox#keydown blur->city-combobox#closeLater"
+                 aria-autocomplete="list"
+                 aria-expanded="false"
+                 aria-controls="city-combobox-list">
+          <ul id="city-combobox-list"
+              class="city-combobox-list"
+              role="listbox"
+              hidden
+              data-city-combobox-target="list">
+            <% @cities.each do |city| %>
+              <li role="option"
+                  class="city-combobox-option"
+                  data-city-combobox-target="option"
+                  data-name="<%= city.name %>"
+                  data-slug="<%= city.slug %>"
+                  data-action="mousedown->city-combobox#pick"><%= city.name %></li>
+            <% end %>
+            <li class="city-combobox-empty" hidden data-city-combobox-target="empty">Город не найден</li>
+          </ul>
+        </div>
       </label>
     <% end %>
 
@@ -118,7 +148,7 @@
       <li class="step-item">
         <span class="step-num">02</span>
         <h3>Заявка или регистрация</h3>
-        <p>Через парк или самостоятельно в Яндекс Про</p>
+        <p>Заявка или самостоятельная регистрация в Яндекс Про</p>
       </li>
       <li class="step-item">
         <span class="step-num">03</span>
@@ -134,12 +164,12 @@
   </div>
 </section>
 
-<section class="section" id="park">
+<section class="section" id="start">
   <div class="container why-grid">
     <div>
-      <p class="eyebrow">Парк</p>
-      <h2>Зачем подключаться через парк</h2>
-      <p class="section-lead">Парк Доставка — партнёр для оформления и старта. Не официальный сайт Яндекса.</p>
+      <p class="eyebrow">Старт</p>
+      <h2>Как начать работать курьером</h2>
+      <p class="section-lead">Оставьте заявку или зарегистрируйтесь самостоятельно — поможем с документами и первым слотом.</p>
       <ul class="check-list">
         <li>Помощь с заявкой и документами</li>
         <li>Подскажем формат под ваш город</li>
@@ -159,7 +189,7 @@
         <li>Паспорт и данные по гражданству</li>
         <li>Для авто — права и автомобиль</li>
       </ul>
-      <a class="text-link" href="<%= rabota_cherez_park_path %>/">Как работает парк</a>
+      <a class="text-link" href="<%= usloviya_raboty_path %>/">Подробнее об условиях</a>
     </div>
   </div>
 </section>
