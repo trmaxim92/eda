@@ -36,7 +36,7 @@ services:
       RAILS_MAX_THREADS: "3"
       WEB_CONCURRENCY: "0"
     ports:
-      - "80:3000"
+      - "127.0.0.1:3000:3000"
     volumes:
       - park_storage:/rails/storage
     mem_limit: 512m
