@@ -1,0 +1,22 @@
+<%= form_with model: [:admin, page], class: "lead-form" do |f| %>
+  <% if page.errors.any? %><div class="flash flash-alert"><%= page.errors.full_messages.to_sentence %></div><% end %>
+  <% if page.persisted? %>
+    <p>
+      <%= button_to "SEO из шаблона", apply_seo_template_admin_city_courier_page_path(page), method: :post, class: "btn btn-secondary btn-sm" %>
+      <%= link_to "Preview", preview_admin_city_courier_page_path(page), class: "btn btn-secondary btn-sm", target: "_blank" %>
+    </p>
+  <% end %>
+  <div class="form-grid">
+    <label>Город<%= f.collection_select :city_id, @cities, :id, :name %></label>
+    <label>Тип<%= f.collection_select :courier_type_id, @courier_types, :id, :name %></label>
+    <label>Slug<%= f.text_field :slug, placeholder: "peshiy-kurer" %></label>
+    <label>SEO Title<%= f.text_field :seo_title %></label>
+    <label>H1<%= f.text_field :h1 %></label>
+    <label>SEO Description<%= f.text_field :seo_description %></label>
+  </div>
+  <label>Краткое описание<%= f.text_field :short_description %></label>
+  <label>Уникальный текст<%= f.text_area :unique_text, rows: 10 %></label>
+  <label class="checkbox"><%= f.check_box :published %> Опубликовано</label>
+  <label class="checkbox"><%= f.check_box :is_indexable %> Indexable</label>
+  <%= f.submit "Сохранить", class: "btn btn-primary" %>
+<% end %>

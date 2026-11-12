@@ -1,0 +1,48 @@
+<article class="section">
+  <div class="container narrow prose">
+    <p class="eyebrow"><%= @city.name %> · <%= @courier_type.name %></p>
+    <h1><%= @page.h1.presence || "Работа #{@courier_type.name.downcase} в Яндекс Еде #{@city.name_prepositional}" %></h1>
+    <% if @page.short_description.present? %><p class="lead"><%= @page.short_description %></p><% end %>
+    <%= simple_format(@page.unique_text) %>
+
+    <div class="city-type-links">
+      <a class="text-link" href="<%= gorod_path(@city) %>/">Страница города</a>
+      <a class="text-link" href="/<%= @courier_type.slug %>/">Общие условия формата</a>
+      <a class="text-link" href="<%= usloviya_raboty_path %>/">Условия работы</a>
+      <a class="text-link" href="<%= rabota_cherez_park_path %>/">Работа через парк</a>
+    </div>
+  </div>
+</article>
+
+<section class="section section-soft" id="lead-form">
+  <div class="container form-wrap">
+    <div class="form-intro">
+      <p class="eyebrow">Заявка</p>
+      <h2><%= @courier_type.name %> — <%= @city.name %></h2>
+      <% if @referral_link.present? %>
+        <p class="cta-row">
+          <a class="btn btn-secondary" href="<%= register_path_for(city: @city, courier_type: @courier_type) %>">Зарегистрироваться самостоятельно</a>
+        </p>
+      <% else %>
+        <p class="disclaimer">Самостоятельная регистрация временно недоступна — оставьте заявку.</p>
+      <% end %>
+    </div>
+    <%= render "shared/lead_form",
+          cities: City.published.available.ordered,
+          courier_types: CourierType.published.ordered,
+          selected_city_id: @city.id,
+          selected_courier_type_id: @courier_type.id %>
+  </div>
+</section>
+
+<% if @faqs.any? %>
+<section class="section">
+  <div class="container narrow">
+    <div class="section-head">
+      <p class="eyebrow">FAQ</p>
+      <h2>Вопросы — <%= @city.name %></h2>
+    </div>
+    <%= render "shared/faq", faqs: @faqs %>
+  </div>
+</section>
+<% end %>

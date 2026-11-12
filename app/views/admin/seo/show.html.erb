@@ -1,0 +1,11 @@
+<h1>SEO-диагностика</h1>
+<p class="muted">Чек-лист готовности, не гарантия позиций в поиске.</p>
+<% if @issues.empty? %>
+  <p class="flash flash-notice">Критических замечаний нет.</p>
+<% else %>
+  <ul>
+    <% @issues.each do |issue| %>
+      <li><%= issue %></li>
+    <% end %>
+  </ul>
+<% end %>

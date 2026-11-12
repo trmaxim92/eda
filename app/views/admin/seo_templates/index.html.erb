@@ -1,0 +1,15 @@
+<h1>SEO-шаблоны <%= link_to "Создать", new_admin_seo_template_path, class: "btn btn-primary" %></h1>
+<table class="admin-table">
+  <thead><tr><th>Имя</th><th>Scope</th><th>Активен</th><th></th></tr></thead>
+  <tbody>
+    <% @templates.each do |tpl| %>
+      <tr>
+        <td><%= tpl.name %></td>
+        <td><%= tpl.scope %></td>
+        <td><%= tpl.active? ? "да" : "нет" %></td>
+        <td><%= link_to "Изменить", edit_admin_seo_template_path(tpl) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<p class="muted">Переменные: {city}, {city_prep}, {courier_type}</p>

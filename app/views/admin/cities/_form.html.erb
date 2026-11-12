@@ -1,18 +1,54 @@
 <%= form_with model: [:admin, city], class: "lead-form" do |f| %>
   <% if city.errors.any? %><div class="flash flash-alert"><%= city.errors.full_messages.to_sentence %></div><% end %>
+
+  <% if city.persisted? %>
+    <p class="muted">Готовность к публикации: <strong><%= city.readiness_score %>%</strong>
+      <% if city.indexable? %> · <%= link_to "Открыть на сайте", gorod_path(city), target: "_blank" %><% end %>
+    </p>
+    <p>
+      <%= button_to "Заполнить SEO из шаблона", apply_seo_template_admin_city_path(city), method: :post, class: "btn btn-secondary btn-sm" %>
+      <%= button_to "Перезаписать SEO из шаблона", apply_seo_template_admin_city_path(city, overwrite: 1), method: :post, class: "btn btn-secondary btn-sm" %>
+    </p>
+  <% end %>
+
   <div class="form-grid">
-    <label>Название<%= f.text_field :name %></label>
+    <label>Название<%= f.text_field :name, required: true %></label>
     <label>Slug<%= f.text_field :slug %></label>
+    <label>В предложном падеже<%= f.text_field :name_in_prepositional, placeholder: "в Уфе" %></label>
     <label>Регион<%= f.text_field :region %></label>
-    <label>SEO Title<%= f.text_field :seo_title %></label>
-    <label>SEO Description<%= f.text_field :seo_description %></label>
-    <label>H1<%= f.text_field :h1 %></label>
+    <label>Страна<%= f.text_field :country %></label>
+    <label>Краткое описание<%= f.text_field :short_description %></label>
   </div>
+
+  <h3>SEO</h3>
+  <div class="form-grid">
+    <label>SEO Title<%= f.text_field :seo_title %></label>
+    <label>H1<%= f.text_field :h1 %></label>
+    <label>SEO Description<%= f.text_field :seo_description %></label>
+    <label>Canonical<%= f.text_field :canonical_url %></label>
+    <label>Robots<%= f.text_field :robots_meta %></label>
+    <label>OG Title<%= f.text_field :og_title %></label>
+    <label>OG Description<%= f.text_field :og_description %></label>
+  </div>
+
   <label>Уникальный текст<%= f.text_area :unique_text, rows: 8 %></label>
   <label>Способы доставки<%= f.text_area :delivery_methods, rows: 3 %></label>
   <label>Условия подключения<%= f.text_area :connection_conditions, rows: 3 %></label>
   <label>Особенности<%= f.text_area :work_features, rows: 3 %></label>
+
+  <h3>Типы курьеров в городе</h3>
+  <div class="form-grid">
+    <% (@courier_types || CourierType.ordered).each do |type| %>
+      <% checked = @availability&.dig(type.id)&.available || city.city_courier_types.find { |j| j.courier_type_id == type.id }&.available %>
+      <label class="checkbox">
+        <input type="checkbox" name="courier_type_available[<%= type.id %>]" value="1" <%= "checked" if checked %>>
+        <%= type.name %>
+      </label>
+    <% end %>
+  </div>
+
   <label class="checkbox"><%= f.check_box :connection_available %> Подключение доступно</label>
+  <label class="checkbox"><%= f.check_box :is_indexable %> Разрешить индексацию</label>
   <label class="checkbox"><%= f.check_box :published %> Опубликовано</label>
   <%= f.submit "Сохранить", class: "btn btn-primary" %>
 <% end %>

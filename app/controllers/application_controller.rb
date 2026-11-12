@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include Pundit::Authorization
   include SeoMeta
   include UtmTrackable
+  include SelectedCity
 
   allow_browser versions: :modern
   protect_from_forgery with: :exception

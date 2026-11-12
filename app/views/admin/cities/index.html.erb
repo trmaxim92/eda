@@ -1,6 +1,30 @@
 <h1>Города <%= link_to "Создать", new_admin_city_path, class: "btn btn-primary" %></h1>
+
+<p class="admin-filters">
+  <%= link_to "Все", admin_cities_path %> ·
+  <%= link_to "Опубликованные", admin_cities_path(filter: "published") %> ·
+  <%= link_to "Черновики", admin_cities_path(filter: "draft") %> ·
+  <%= link_to "Доступны", admin_cities_path(filter: "available") %> ·
+  <%= link_to "Закрыты", admin_cities_path(filter: "closed") %> ·
+  <%= link_to "Indexable", admin_cities_path(filter: "indexable") %> ·
+  <%= link_to "Noindex", admin_cities_path(filter: "noindex") %> ·
+  <%= link_to "Без Title", admin_cities_path(filter: "no_title") %> ·
+  <%= link_to "Без Description", admin_cities_path(filter: "no_description") %> ·
+  <%= link_to "Без контента", admin_cities_path(filter: "no_content") %>
+</p>
+
 <table class="admin-table">
-  <thead><tr><th>Город</th><th>Slug</th><th>Доступен</th><th>Публ.</th><th></th></tr></thead>
+  <thead>
+    <tr>
+      <th>Город</th>
+      <th>Slug</th>
+      <th>Доступен</th>
+      <th>Публ.</th>
+      <th>Index</th>
+      <th>Готовность</th>
+      <th></th>
+    </tr>
+  </thead>
   <tbody>
     <% @cities.each do |city| %>
       <tr>
@@ -8,7 +32,12 @@
         <td><%= city.slug %></td>
         <td><%= city.connection_available? ? "да" : "нет" %></td>
         <td><%= city.published? ? "да" : "нет" %></td>
-        <td><%= link_to "Изменить", edit_admin_city_path(city) %></td>
+        <td><%= city.indexable? ? "да" : "нет" %></td>
+        <td><%= city.readiness_score %>%</td>
+        <td>
+          <%= link_to "Изменить", edit_admin_city_path(city) %>
+          <% if city.indexable? %> · <%= link_to "На сайте", gorod_path(city), target: "_blank" %><% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

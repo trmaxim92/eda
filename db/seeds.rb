@@ -150,13 +150,17 @@ city_payloads.each do |payload|
   city = City.find_or_initialize_by(slug: payload[:slug])
   city.assign_attributes(
     payload.merge(
+      name_in_prepositional: in_city,
+      country: "RU",
+      short_description: "Подключение курьеров Яндекс Еды #{in_city} через парк Парк Доставка.",
       connection_available: true,
       published: true,
+      is_indexable: true,
       delivery_methods: "Пеший, вело и авто — уточняйте актуальный формат при подключении #{in_city}.",
       connection_conditions: "Оставьте заявку на этой странице или перейдите по реферальной ссылке парка, если она активна.",
       work_features: "График и загрузка #{in_city} зависят от спроса, времени суток и условий Яндекс Про.",
-      seo_title: "Работа курьером в Яндекс Еде #{in_city}",
-      seo_description: "Устроиться курьером Яндекс Еды #{in_city} через парк Парк Доставка: заявка, документы, пеший / вело / авто.",
+      seo_title: "Работа курьером в Яндекс Еде #{in_city} — подключение и условия",
+      seo_description: "Узнайте, как начать работать курьером в Яндекс Еде #{in_city}. Пешая, велосипедная и автомобильная доставка. Оставьте заявку или зарегистрируйтесь самостоятельно.",
       h1: "Работа курьером в Яндекс Еде #{in_city}",
       faq_items: [
         { "question" => "Как устроиться курьером Яндекс Еды #{in_city}?", "answer" => "Оставьте заявку на этой странице или зарегистрируйтесь самостоятельно по ссылке парка, если она активна." },
@@ -166,6 +170,58 @@ city_payloads.each do |payload|
     )
   )
   city.save!
+  availability = CourierType.pluck(:id).to_h { |id| [ id.to_s, true ] }
+  # Пример: в Казани вело временно как недоступный для демонстрации матрицы
+  if city.slug == "kazan"
+    bike = CourierType.find_by(code: "bike")
+    availability[bike.id.to_s] = false if bike
+  end
+  city.sync_courier_type_availability!(availability)
+end
+
+[
+  {
+    scope: "city", name: "Город по умолчанию",
+    title_template: "Работа курьером в Яндекс Еде {city_prep} — подключение и условия",
+    description_template: "Узнайте об условиях работы курьером в Яндекс Еде {city_prep}. Выберите способ доставки и оставьте заявку на подключение.",
+    h1_template: "Работа курьером в Яндекс Еде {city_prep}"
+  },
+  {
+    scope: "courier_type", name: "Тип курьера",
+    title_template: "Работа {courier_type} курьером в Яндекс Еде — условия",
+    description_template: "Условия работы {courier_type} курьером в Яндекс Еде: требования, документы и подключение через парк.",
+    h1_template: "Работа {courier_type} курьером в Яндекс Еде"
+  },
+  {
+    scope: "city_courier", name: "Город и тип",
+    title_template: "Работа {courier_type} курьером в Яндекс Еде {city_prep}",
+    description_template: "Как устроиться {courier_type} курьером в Яндекс Еде {city_prep}: условия, заявка и регистрация через парк.",
+    h1_template: "Работа {courier_type} курьером в Яндекс Еде {city_prep}"
+  }
+].each do |attrs|
+  tpl = SeoTemplate.find_or_initialize_by(scope: attrs[:scope], name: attrs[:name])
+  tpl.assign_attributes(attrs.merge(active: true))
+  tpl.save!
+end
+
+ufa = City.find_by(slug: "ufa")
+pedestrian = CourierType.find_by(code: "pedestrian")
+if ufa && pedestrian
+  page = CityCourierPage.find_or_initialize_by(city: ufa, courier_type: pedestrian)
+  page.assign_attributes(
+    slug: "peshiy-kurer",
+    published: true,
+    is_indexable: true,
+    short_description: "Пешая доставка заказов Яндекс Еды в Уфе через парк Парк Доставка.",
+    unique_text: "Работа пешим курьером в Яндекс Еде в Уфе: короткие маршруты без автомобиля, заказы из ресторанов, магазинов и аптек. Парк Парк Доставка помогает с заявкой, документами и выходом на первый слот. На странице — условия пешего формата именно для Уфы, форма заявки и переход к самостоятельной регистрации при активной ссылке. Это не официальный сайт Яндекса.",
+    seo_title: "Работа пешим курьером в Яндекс Еде в Уфе",
+    seo_description: "Как устроиться пешим курьером в Яндекс Еде в Уфе: требования, заявка и подключение через парк.",
+    h1: "Работа пешим курьером в Яндекс Еде в Уфе",
+    faq_items: [
+      { "question" => "Нужен ли транспорт пешему курьеру в Уфе?", "answer" => "Нет, пеший формат рассчитан на доставку без автомобиля или велосипеда." }
+    ]
+  )
+  page.save!
 end
 
 pages = [

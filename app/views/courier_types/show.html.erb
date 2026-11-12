@@ -27,6 +27,16 @@
       <h2>Плюсы и ограничения</h2>
       <%= simple_format(@courier_type.pros_cons) %>
     <% end %>
+    <% if @cities.any? %>
+      <h2>В каких городах доступен этот формат</h2>
+      <div class="city-chip-row">
+        <% @cities.each do |city| %>
+          <a class="city-chip" href="<%= gorod_path(city) %>/"><%= city.name %></a>
+        <% end %>
+      </div>
+      <p><a class="text-link" href="<%= goroda_path %>/">Все города</a></p>
+    <% end %>
+
     <p class="related">
       <a href="<%= rabota_kurerom_path %>/">Работа курьером</a> ·
       <a href="<%= usloviya_raboty_path %>/">Условия</a> ·

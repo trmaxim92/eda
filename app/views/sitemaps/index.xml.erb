@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <% @sitemaps.each do |item| %>
+    <sitemap>
+      <loc><%= item[:loc] %></loc>
+      <% if item[:lastmod].present? %>
+        <lastmod><%= item[:lastmod].utc.iso8601 %></lastmod>
+      <% end %>
+    </sitemap>
+  <% end %>
+</sitemapindex>

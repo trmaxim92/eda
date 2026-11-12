@@ -22,6 +22,68 @@
   </div>
 </section>
 
+<section class="section section-soft" id="city-select">
+  <div class="container">
+    <div class="section-head section-head-row">
+      <div>
+        <p class="eyebrow">Город</p>
+        <h2>Выберите город</h2>
+        <p class="section-lead">Выбор сохраняется у вас в браузере и не меняет адрес страницы для поиска.</p>
+      </div>
+      <% if selected_city %>
+        <div class="city-selected">
+          <span>Сейчас: <strong><%= selected_city.name %></strong></span>
+          <%= button_to "Сбросить", select_city_path, method: :delete, class: "btn btn-secondary btn-sm" %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= form_with url: select_city_path, method: :post, class: "city-select-form", local: true do %>
+      <label>
+        Найти город
+        <input type="search" name="q" list="city-options" placeholder="Начните вводить название" class="city-search" oninput="this.form.city_slug.value=''">
+      </label>
+      <datalist id="city-options">
+        <% @cities.each do |city| %>
+          <option value="<%= city.name %>" data-slug="<%= city.slug %>"></option>
+        <% end %>
+      </datalist>
+      <label>
+        Или выберите из списка
+        <select name="city_slug" required>
+          <option value="">Выберите город</option>
+          <% @cities.each do |city| %>
+            <option value="<%= city.slug %>" <%= "selected" if selected_city&.id == city.id %>><%= city.name %></option>
+          <% end %>
+        </select>
+      </label>
+      <button type="submit" class="btn btn-primary">Выбрать</button>
+    <% end %>
+
+    <% if selected_city %>
+      <div class="city-regional-block">
+        <p><strong><%= selected_city.name %></strong> — доступные форматы:</p>
+        <div class="city-chip-row">
+          <% if @selected_city_types.any? %>
+            <% @selected_city_types.each do |type| %>
+              <a class="city-chip" href="/<%= type.slug %>/"><%= type.name %></a>
+            <% end %>
+          <% else %>
+            <span class="muted">Форматы уточним при заявке</span>
+          <% end %>
+        </div>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="<%= gorod_path(selected_city) %>/">Страница города</a>
+          <% if @selected_city_referral.present? %>
+            <a class="btn btn-secondary" href="<%= register_path_for(city: selected_city) %>">Регистрация</a>
+          <% end %>
+          <a class="btn btn-secondary" href="#lead-form">Оставить заявку</a>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</section>
+
 <section class="section" id="types">
   <div class="container">
     <div class="section-head">

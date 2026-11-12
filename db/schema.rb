@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_12_120011) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_12_180001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -35,8 +35,52 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_12_120011) do
     t.jsonb "blocks", default: [], null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name_in_prepositional"
+    t.string "country", default: "RU", null: false
+    t.string "short_description"
+    t.boolean "is_indexable", default: true, null: false
+    t.index ["is_indexable"], name: "index_cities_on_is_indexable"
     t.index ["published"], name: "index_cities_on_published"
     t.index ["slug"], name: "index_cities_on_slug", unique: true
+  end
+
+  create_table "city_courier_pages", force: :cascade do |t|
+    t.bigint "city_id", null: false
+    t.bigint "courier_type_id", null: false
+    t.string "slug", null: false
+    t.boolean "published", default: false, null: false
+    t.boolean "is_indexable", default: false, null: false
+    t.text "unique_text"
+    t.text "short_description"
+    t.jsonb "faq_items", default: [], null: false
+    t.jsonb "blocks", default: [], null: false
+    t.string "seo_title"
+    t.string "seo_description"
+    t.string "h1"
+    t.string "canonical_url"
+    t.string "robots_meta", default: "index,follow"
+    t.string "og_title"
+    t.string "og_description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_id", "courier_type_id"], name: "index_city_courier_pages_on_city_and_type", unique: true
+    t.index ["city_id", "slug"], name: "index_city_courier_pages_on_city_and_slug", unique: true
+    t.index ["city_id"], name: "index_city_courier_pages_on_city_id"
+    t.index ["courier_type_id"], name: "index_city_courier_pages_on_courier_type_id"
+    t.index ["is_indexable"], name: "index_city_courier_pages_on_is_indexable"
+    t.index ["published"], name: "index_city_courier_pages_on_published"
+  end
+
+  create_table "city_courier_types", force: :cascade do |t|
+    t.bigint "city_id", null: false
+    t.bigint "courier_type_id", null: false
+    t.boolean "available", default: false, null: false
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_id", "courier_type_id"], name: "index_city_courier_types_uniqueness", unique: true
+    t.index ["city_id"], name: "index_city_courier_types_on_city_id"
+    t.index ["courier_type_id"], name: "index_city_courier_types_on_courier_type_id"
   end
 
   create_table "courier_types", force: :cascade do |t|
@@ -200,6 +244,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_12_120011) do
     t.index ["published"], name: "index_reviews_on_published"
   end
 
+  create_table "seo_templates", force: :cascade do |t|
+    t.string "scope", null: false
+    t.string "name", null: false
+    t.string "title_template", null: false
+    t.string "description_template", null: false
+    t.string "h1_template", null: false
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["scope"], name: "index_seo_templates_on_scope"
+  end
+
   create_table "site_settings", force: :cascade do |t|
     t.string "key", null: false
     t.text "value"
@@ -225,6 +281,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_12_120011) do
     t.index ["role"], name: "index_users_on_role"
   end
 
+  add_foreign_key "city_courier_pages", "cities"
+  add_foreign_key "city_courier_pages", "courier_types"
+  add_foreign_key "city_courier_types", "cities"
+  add_foreign_key "city_courier_types", "courier_types"
   add_foreign_key "leads", "cities"
   add_foreign_key "leads", "courier_types"
   add_foreign_key "referral_clicks", "cities"

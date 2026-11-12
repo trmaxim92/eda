@@ -1,5 +1,6 @@
 <% selected_city_id = local_assigns[:selected_city_id] %>
-<%= form_with model: Lead.new(city_id: selected_city_id), url: leads_path, class: "lead-form", data: { turbo: false } do |f| %>
+<% selected_courier_type_id = local_assigns[:selected_courier_type_id] %>
+<%= form_with model: Lead.new(city_id: selected_city_id, courier_type_id: selected_courier_type_id), url: leads_path, class: "lead-form", data: { turbo: false } do |f| %>
   <div class="hp" aria-hidden="true">
     <label>Company<input type="text" name="company" tabindex="-1" autocomplete="off"></label>
   </div>
@@ -10,7 +11,7 @@
       <%= f.collection_select :city_id, cities, :id, :name, { include_blank: "Выберите город", selected: selected_city_id }, required: true %>
     </label>
     <label>Тип доставки
-      <%= f.collection_select :courier_type_id, courier_types, :id, :name, { include_blank: "Выберите тип" }, required: true %>
+      <%= f.collection_select :courier_type_id, courier_types, :id, :name, { include_blank: "Выберите тип", selected: selected_courier_type_id }, required: true %>
     </label>
   </div>
   <label class="checkbox">

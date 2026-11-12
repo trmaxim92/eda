@@ -1,0 +1,22 @@
+<h1>Региональные страницы типов <%= link_to "Создать", new_admin_city_courier_page_path, class: "btn btn-primary" %></h1>
+<table class="admin-table">
+  <thead>
+    <tr><th>Город</th><th>Тип</th><th>Slug</th><th>Публ.</th><th>Index</th><th>Готовность</th><th></th></tr>
+  </thead>
+  <tbody>
+    <% @pages.each do |page| %>
+      <tr>
+        <td><%= page.city.name %></td>
+        <td><%= page.courier_type.name %></td>
+        <td><%= page.slug %></td>
+        <td><%= page.published? ? "да" : "нет" %></td>
+        <td><%= page.indexable? ? "да" : "нет" %></td>
+        <td><%= page.readiness_score %>%</td>
+        <td>
+          <%= link_to "Изменить", edit_admin_city_courier_page_path(page) %> ·
+          <%= link_to "Preview", preview_admin_city_courier_page_path(page), target: "_blank" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
