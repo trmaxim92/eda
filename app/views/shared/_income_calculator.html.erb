@@ -2,7 +2,7 @@
   <div class="calculator">
     <div class="form-grid">
       <label>Тип курьера
-        <select data-income-calculator-target="type">
+        <select data-income-calculator-target="type" data-action="change->income-calculator#recalculate">
           <option value="pedestrian">Пеший</option>
           <option value="bike">Вело</option>
           <option value="auto">Авто</option>
@@ -22,19 +22,19 @@
           <% end %>
         </select>
       </label>
-      <label>Ориентир ₽/час
+      <label>Ориентир, ₽/час
         <select data-income-calculator-target="rate" data-action="change->income-calculator#recalculate">
           <% [250, 300, 350, 400, 450, 500].each do |rate| %>
-            <option value="<%= rate %>" <%= "selected" if rate == hourly_rate.to_i %>>от <%= rate %> ₽</option>
+            <option value="<%= rate %>" <%= "selected" if rate == hourly_rate.to_i %>><%= rate %></option>
           <% end %>
         </select>
       </label>
     </div>
-    <p class="disclaimer">Расчёт является ориентировочным. Фактический доход зависит от количества заказов, города, времени работы, условий платформы и других факторов.</p>
+    <p class="disclaimer">Фактический доход зависит от числа заказов, города, времени работы и условий платформы.</p>
   </div>
   <div class="calc-result-card">
-    <div class="calc-chart" aria-hidden="true"></div>
-    <div class="label">Ориентировочно</div>
-    <div class="value">≈ <span data-income-calculator-target="result">0</span> ₽ <span class="value-suffix">в месяц</span></div>
+    <p class="label">Ориентировочно в месяц</p>
+    <p class="value">≈ <span data-income-calculator-target="result">0</span> ₽</p>
+    <p class="muted">Не гарантированный заработок</p>
   </div>
 </div>

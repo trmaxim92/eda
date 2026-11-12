@@ -1,12 +1,16 @@
 <section class="section">
   <div class="container">
-    <h1><%= seo_meta[:h1] %></h1>
-    <p class="lead">Города, где доступно подключение курьеров через парк Park Dostavka.</p>
+    <div class="section-head">
+      <p class="eyebrow">География</p>
+      <h1><%= seo_meta[:h1] %></h1>
+      <p class="lead">Города, где доступно подключение курьеров через парк Парк Доставка.</p>
+    </div>
     <div class="cards-3">
       <% @cities.each do |city| %>
         <a class="type-card" href="<%= gorod_path(city) %>/">
           <h3><%= city.name %></h3>
           <p><%= city.region %></p>
+          <span class="text-link">Открыть</span>
         </a>
       <% end %>
     </div>

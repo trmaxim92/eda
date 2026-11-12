@@ -6,13 +6,17 @@
   </div>
 </article>
 
-<section class="section section-alt" id="lead-form">
-  <div class="container narrow">
-    <h2>Оставить заявку</h2>
+<section class="section section-soft" id="lead-form">
+  <div class="container form-wrap">
+    <div class="form-intro">
+      <p class="eyebrow">Заявка</p>
+      <h2>Оставить заявку</h2>
+      <p>Укажите контакты — свяжемся и подскажем по подключению.</p>
+      <% if registration_available? %>
+        <p class="cta-row"><a class="btn btn-secondary" href="<%= go_register_path %>">Зарегистрироваться самостоятельно</a></p>
+      <% end %>
+    </div>
     <%= render "shared/lead_form", cities: @cities, courier_types: @courier_types %>
-    <% if registration_available? %>
-      <p class="cta-row"><a class="btn btn-secondary" href="<%= go_register_path %>">Зарегистрироваться самостоятельно</a></p>
-    <% end %>
   </div>
 </section>
 

@@ -35,15 +35,18 @@
   </div>
 </article>
 
-<section class="section section-alt" id="lead-form">
-  <div class="container narrow">
-    <h2>Подключиться</h2>
+<section class="section section-soft" id="lead-form">
+  <div class="container form-wrap">
+    <div class="form-intro">
+      <p class="eyebrow">Подключение</p>
+      <h2>Подключиться</h2>
+      <% if @referral_link.present? %>
+        <p class="cta-row"><a class="btn btn-secondary" href="<%= register_path_for(courier_type: @courier_type) %>">Зарегистрироваться самостоятельно</a></p>
+      <% else %>
+        <p class="disclaimer">Кнопка самостоятельной регистрации временно недоступна — оставьте заявку.</p>
+      <% end %>
+    </div>
     <%= render "shared/lead_form", cities: @cities, courier_types: CourierType.published.ordered %>
-    <% if @referral_link.present? %>
-      <p class="cta-row"><a class="btn btn-secondary" href="<%= register_path_for(courier_type: @courier_type) %>">Зарегистрироваться самостоятельно</a></p>
-    <% else %>
-      <p class="disclaimer">Кнопка самостоятельной регистрации временно недоступна — оставьте заявку.</p>
-    <% end %>
   </div>
 </section>
 

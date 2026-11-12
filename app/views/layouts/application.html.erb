@@ -21,8 +21,8 @@
     <header class="site-header">
       <div class="container header-inner">
         <a class="brand" href="<%= root_path %>">
-          <span class="brand-mark" aria-hidden="true">📍</span>
-          Парк Доставка
+          <span class="brand-mark">ПД</span>
+          <span class="brand-text">Парк Доставка</span>
         </a>
         <nav class="nav" aria-label="Основная навигация">
           <a href="<%= rabota_v_yandex_eda_path %>/">Работа в Яндекс Еде</a>
@@ -50,10 +50,10 @@
     <footer class="site-footer">
       <div class="container">
         <div class="footer-top">
-          <div>
+          <div class="footer-brand">
             <a class="brand" href="<%= root_path %>">
-              <span class="brand-mark">П</span>
-              Парк Доставка
+              <span class="brand-mark">ПД</span>
+              <span class="brand-text">Парк Доставка</span>
             </a>
             <p>Парк-партнёр для подключения курьеров к Яндекс Еде. Не является официальным сайтом Яндекса.</p>
           </div>
@@ -63,15 +63,20 @@
             <a href="<%= rabota_cherez_park_path %>/">Работа через парк</a>
             <a href="<%= otzyvy_path %>/">Отзывы</a>
             <a href="<%= goroda_path %>/">Города</a>
+            <a href="<%= kontakty_path %>/">Контакты</a>
           </div>
-          <div>
-            <p><strong><%= SiteSetting.get("contact_phone", "+7 (800) 123-45-67") rescue "+7 (800) 123-45-67" %></strong></p>
-            <p><%= SiteSetting.get("contact_email", "hello@park-dostavka.ru") rescue "hello@park-dostavka.ru" %></p>
-            <div class="socials" aria-label="Соцсети">
-              <a href="#" aria-label="Telegram">Tg</a>
-              <a href="#" aria-label="VK">VK</a>
-              <a href="#" aria-label="YouTube">YT</a>
-            </div>
+          <div class="footer-contacts">
+            <a class="footer-phone" href="tel:<%= (SiteSetting.get('contact_phone', '+78001234567') rescue '+78001234567').to_s.gsub(/[^\d+]/, '') %>">
+              <%= SiteSetting.get("contact_phone", "+7 (800) 123-45-67") rescue "+7 (800) 123-45-67" %>
+            </a>
+            <a href="mailto:<%= SiteSetting.get('contact_email', 'hello@park-dostavka.ru') rescue 'hello@park-dostavka.ru' %>">
+              <%= SiteSetting.get("contact_email", "hello@park-dostavka.ru") rescue "hello@park-dostavka.ru" %>
+            </a>
+            <p class="footer-social">
+              <a href="#">Telegram</a>
+              <a href="#">VK</a>
+              <a href="#">YouTube</a>
+            </p>
           </div>
         </div>
         <div class="footer-bottom">
