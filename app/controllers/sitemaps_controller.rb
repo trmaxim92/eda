@@ -19,17 +19,27 @@ class SitemapsController < ApplicationController
     render formats: :xml
   end
 
+  # Virtual page_types that already have a dedicated public URL in STATIC_PATHS / routes.
+  SKIP_PAGE_TYPES = %w[home cities_index reviews blog_index blog].freeze
+
   def pages
     @entries = []
-    STATIC_PATHS.each do |path|
-      @entries << { loc: "#{request.base_url}#{path}", lastmod: Time.current }
+    seen = {}
+
+    add_entry = lambda do |path, lastmod|
+      loc = "#{request.base_url}#{path}"
+      return if seen[loc]
+
+      seen[loc] = true
+      @entries << { loc: loc, lastmod: lastmod }
     end
-    CourierType.published.find_each do |type|
-      @entries << { loc: "#{request.base_url}/#{type.slug}/", lastmod: type.updated_at }
-    end
+
+    STATIC_PATHS.each { |path| add_entry.call(path, Time.current) }
+    CourierType.published.find_each { |type| add_entry.call("/#{type.slug}/", type.updated_at) }
     Page.published.where.not(robots_meta: [ "noindex,follow", "noindex,nofollow" ]).find_each do |page|
-      next if page.page_type == "home"
-      @entries << { loc: "#{request.base_url}/#{page.slug}/", lastmod: page.updated_at }
+      next if SKIP_PAGE_TYPES.include?(page.page_type)
+
+      add_entry.call("/#{page.slug}/", page.updated_at)
     end
     render template: "sitemaps/urlset", formats: :xml
   end
