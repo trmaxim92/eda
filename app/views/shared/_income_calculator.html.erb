@@ -1,8 +1,8 @@
-<div class="calc-layout" data-controller="income-calculator" data-income-calculator-rate-value="<%= hourly_rate %>">
+<div class="calc-layout" data-controller="income-calculator" data-income-calculator-rate-value="400">
   <div class="calculator">
     <div class="form-grid">
       <label>Тип курьера
-        <select data-income-calculator-target="type" data-action="change->income-calculator#recalculate">
+        <select data-income-calculator-target="type" data-action="change->income-calculator#changeType">
           <option value="pedestrian">Пеший</option>
           <option value="bike">Вело</option>
           <option value="auto">Авто</option>
@@ -24,13 +24,13 @@
       </label>
       <label>Ориентир, ₽/час
         <select data-income-calculator-target="rate" data-action="change->income-calculator#recalculate">
-          <% [250, 300, 350, 400, 450, 500].each do |rate| %>
-            <option value="<%= rate %>" <%= "selected" if rate == hourly_rate.to_i %>><%= rate %></option>
+          <% [300, 350, 400, 450, 500, 534].each do |rate| %>
+            <option value="<%= rate %>" <%= "selected" if rate == 400 %>><%= rate %></option>
           <% end %>
         </select>
       </label>
     </div>
-    <p class="disclaimer">Фактический доход зависит от числа заказов, города, времени работы и условий платформы.</p>
+    <p class="disclaimer">Ориентир для Москвы: у пеших и вело — база до 110 ₽ за заказ + 30 ₽/км; у авто — база до 120 ₽ + 5 ₽ за минуту расчётного времени. Плюс доплаты за спрос, ожидание и сложность. Не гарантия дохода — сверяйте сумму в Яндекс Про.</p>
   </div>
   <div class="calc-result-card">
     <p class="label">Ориентировочно в месяц</p>
