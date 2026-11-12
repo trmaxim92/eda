@@ -7,7 +7,7 @@
       <div class="cta-row">
         <a class="btn btn-primary" href="#lead-form">Оставить заявку</a>
         <% if registration_available? %>
-          <a class="btn btn-secondary" href="<%= go_register_path %>">Зарегистрироваться самостоятельно</a>
+          <a class="btn btn-primary" href="<%= go_register_path %>">Зарегистрироваться самостоятельно</a>
         <% end %>
       </div>
       <ul class="hero-usps">
@@ -250,7 +250,7 @@
       <p>Укажите контакты — свяжемся и подскажем по подключению в вашем городе.</p>
       <% if registration_available? %>
         <p class="cta-row">
-          <a class="btn btn-ghost" href="<%= go_register_path %>">Зарегистрироваться самостоятельно</a>
+          <a class="btn btn-primary" href="<%= go_register_path %>">Зарегистрироваться самостоятельно</a>
         </p>
       <% end %>
     </div>
