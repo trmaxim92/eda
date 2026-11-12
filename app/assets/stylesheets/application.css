@@ -142,8 +142,7 @@ button, input, select, textarea { font: inherit; }
   display: grid;
   grid-template-columns: 0.92fr 1.08fr;
   gap: 1.5rem;
-  align-items: stretch;
-  min-height: 580px;
+  align-items: center;
 }
 .hero-copy {
   display: flex;
@@ -188,18 +187,13 @@ button, input, select, textarea { font: inherit; }
   font-weight: 700;
 }
 .hero-art {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 540px;
-  background: #000;
+  align-self: center;
   animation: art-in 0.9s ease both;
 }
 .hero-courier {
+  display: block;
   width: 100%;
   height: auto;
-  max-height: 580px;
-  object-fit: contain;
 }
 
 .section { padding: 5rem 0; }
@@ -654,8 +648,7 @@ input, select, textarea {
   .stats,
   .admin-shell { grid-template-columns: 1fr; }
   .hero-shell { min-height: 0; }
-  .hero-art { min-height: 0; order: -1; }
-  .hero-courier { max-height: none; }
+  .hero-art { order: -1; }
   .section-head-row { align-items: start; flex-direction: column; }
   .calc-panel,
   .final-cta { padding: 1.4rem; }
